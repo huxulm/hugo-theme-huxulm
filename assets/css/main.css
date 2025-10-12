@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* Tailwind v4 - 配置暗色模式使用 class 策略 */
+@variant dark (.dark &);
+
+/* Hugo 内容源 */
+@source "../../hugo_stats.json";
+
+/* ================================================
+   平滑过渡效果（推荐）
+   ================================================ */
+
+/* 为主题切换添加平滑过渡 */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ================================================
+   改进的滚动条样式（仅 Webkit 浏览器）
+   ================================================ */
+
+/* 滚动条轨道 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(243 244 246); /* gray-100 */
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: rgb(17 24 39); /* gray-900 */
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  background: rgb(209 213 219); /* gray-300 */
+  border-radius: 0.5rem;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgb(55 65 81); /* gray-700 */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(156 163 175); /* gray-400 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(75 85 99); /* gray-600 */
+}
+
+/* ================================================
+   选中文本样式
+   ================================================ */
+
+::selection {
+  background: rgb(191 219 254); /* blue-200 */
+  color: rgb(17 24 39); /* gray-900 */
+}
+
+.dark ::selection {
+  background: rgb(30 64 175); /* blue-800 */
+  color: rgb(243 244 246); /* gray-100 */
+}
+
+::-moz-selection {
+  background: rgb(191 219 254); /* blue-200 */
+  color: rgb(17 24 39); /* gray-900 */
+}
+
+.dark ::-moz-selection {
+  background: rgb(30 64 175); /* blue-800 */
+  color: rgb(243 244 246); /* gray-100 */
+}
+
+/* ================================================
+   焦点样式优化
+   ================================================ */
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(59 130 246), 0 0 0 4px rgb(255 255 255);
+}
+
+.dark :focus-visible {
+  box-shadow: 0 0 0 2px rgb(59 130 246), 0 0 0 4px rgb(17 24 39);
+}
+
+/* ================================================
+   打印样式
+   ================================================ */
+
+@media print {
+  /* 打印时使用亮色模式 */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  /* 隐藏导航和页脚 */
+  header,
+  footer,
+  nav {
+    display: none !important;
+  }
+}

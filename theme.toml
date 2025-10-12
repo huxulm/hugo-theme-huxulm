@@ -1,0 +1,8 @@
+name = "hugo-theme-huxulm"
+license = "MIT"
+description = "A minimal Hugo theme"
+min_version = "0.148.2"
+
+[author]
+  name = "Your Name"
+  homepage = "https://example.com"

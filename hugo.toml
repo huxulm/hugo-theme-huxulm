@@ -1,0 +1,54 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-US'
+title = 'My New Hugo Site'
+
+[menus]
+  [[menus.main]]
+    name = 'Home'
+    pageRef = '/'
+    weight = 10
+
+  [[menus.main]]
+    name = 'Posts'
+    pageRef = '/posts'
+    weight = 20
+
+  [[menus.main]]
+    name = 'Tags'
+    pageRef = '/tags'
+    weight = 30
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.148.2"
+  
+  # 定义主题的挂载点
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+  
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+  
+  [[module.mounts]]
+    source = "i18n"
+    target = "i18n"
+  
+  [[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"
+
+  [[module.mounts]]
+    disableWatch = true
+    source = 'hugo_stats.json'
+    target = 'assets/notwatching/hugo_stats.json'
