@@ -1,0 +1,122 @@
+{{- /*
+Particles.js animation background
+Requires particles.js library
+
+优先级：
+1. 如果存在 assets/particles-config.json，使用该文件
+2. 否则使用 hugo.toml 中的配置
+3. 最后使用默认值
+*/ -}}
+
+{{- $particlesConfig := dict }}
+
+{{- /* 尝试从 assets 加载配置文件 */ -}}
+{{- $configFile := resources.Get "particles/config.json" }}
+{{- if $configFile }}
+  {{- $particlesConfig = $configFile | transform.Unmarshal }}
+{{- else }}
+  {{- /* 从 hugo.toml 构建配置 */ -}}
+  {{- $config := site.Params.animatedBackground.particles }}
+  {{- $number := $config.number | default 80 }}
+  {{- $color := $config.color | default "#4F46E5" }}
+  {{- $opacity := $config.opacity | default 0.5 }}
+  {{- $size := $config.size | default 3 }}
+  {{- $lineColor := $config.lineColor | default "#4F46E5" }}
+  {{- $lineOpacity := $config.lineOpacity | default 0.4 }}
+  {{- $moveSpeed := $config.moveSpeed | default 2 }}
+  
+  {{- $particlesConfig = dict 
+    "particles" (dict
+      "number" (dict
+        "value" $number
+        "density" (dict
+          "enable" true
+          "value_area" 800
+        )
+      )
+      "color" (dict "value" $color)
+      "shape" (dict
+        "type" "circle"
+        "stroke" (dict
+          "width" 0
+          "color" "#000000"
+        )
+      )
+      "opacity" (dict
+        "value" $opacity
+        "random" false
+        "anim" (dict "enable" false)
+      )
+      "size" (dict
+        "value" $size
+        "random" true
+        "anim" (dict "enable" false)
+      )
+      "line_linked" (dict
+        "enable" true
+        "distance" 150
+        "color" $lineColor
+        "opacity" $lineOpacity
+        "width" 1
+      )
+      "move" (dict
+        "enable" true
+        "speed" $moveSpeed
+        "direction" "none"
+        "random" false
+        "straight" false
+        "out_mode" "out"
+        "bounce" false
+        "attract" (dict
+          "enable" false
+          "rotateX" 600
+          "rotateY" 1200
+        )
+      )
+    )
+    "interactivity" (dict
+      "detect_on" "canvas"
+      "events" (dict
+        "onhover" (dict
+          "enable" true
+          "mode" "grab"
+        )
+        "onclick" (dict
+          "enable" true
+          "mode" "push"
+        )
+        "resize" true
+      )
+      "modes" (dict
+        "grab" (dict
+          "distance" 140
+          "line_linked" (dict "opacity" 1)
+        )
+        "push" (dict "particles_nb" 4)
+      )
+    )
+    "retina_detect" true
+  }}
+{{- end }}
+
+<div id="particles-js" class="absolute inset-0"></div>
+
+<!-- Load Particles.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+(function() {
+  // 检查是否应该禁用动画（尊重用户偏好）
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) {
+    console.log('Particles animation disabled: user prefers reduced motion');
+    return;
+  }
+
+  // 初始化 Particles.js
+  // 配置从 Hugo 传递过来（优先使用 assets/particles-config.json）
+  particlesJS('particles-js', {{ $particlesConfig | jsonify | safeJS }});
+
+  console.log('Particles.js animation initialized with config:', {{ $particlesConfig | jsonify | safeJS }});
+})();
+</script>

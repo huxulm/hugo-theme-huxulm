@@ -1,0 +1,329 @@
+<!-- Table of Contents -->
+{{ if .TableOfContents }}
+<aside class="toc-container bg-white dark:bg-gray-800 dark:border-1 dark:border-white/10 rounded-xl shadow-lg p-5 md:p-6 sticky top-24 transition-all duration-300 hover:shadow-xl">
+  <!-- TOC Header -->
+  <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+    <h3 class="text-lg md:text-xl font-bold text-gray-900 dark:text-gray-100 inline-flex items-center gap-2">
+      <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+      </svg>
+      内容导航
+    </h3>
+    <!-- 折叠按钮 (仅移动端) -->
+    <button 
+      class="md:hidden p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+      onclick="this.closest('.toc-container').querySelector('.toc-content').classList.toggle('hidden')"
+      aria-label="Toggle TOC"
+    >
+      <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- TOC Content -->
+  <div class="toc-content prose prose-sm dark:prose-invert max-w-none">
+    {{ .TableOfContents }}
+  </div>
+  
+  <!-- Progress Indicator -->
+  <div class="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+      <span>阅读进度</span>
+      <span id="reading-progress-text">0%</span>
+    </div>
+    <div class="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div 
+        id="reading-progress-bar" 
+        class="h-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 rounded-full"
+        style="width: 0%"
+      ></div>
+    </div>
+  </div>
+</aside>
+
+<!-- Reading Progress Script -->
+<script>
+  // Initialize TOC with collapsible functionality
+  function initializeTOC() {
+    const tocContent = document.querySelector('.toc-content');
+    if (!tocContent) return;
+    
+    // Find all parent list items (those with nested ul)
+    const parentItems = tocContent.querySelectorAll('li:has(ul)');
+    
+    parentItems.forEach(parentLi => {
+      const parentLink = parentLi.querySelector(':scope > a');
+      const childUl = parentLi.querySelector(':scope > ul');
+      
+      if (!parentLink || !childUl) return;
+      
+      // Mark parent items
+      parentLi.classList.add('toc-parent');
+      childUl.classList.add('toc-children');
+      
+      // Initially collapse all children
+      childUl.style.maxHeight = '0';
+      childUl.style.overflow = 'hidden';
+      childUl.style.transition = 'max-height 0.3s ease-out, opacity 0.3s ease-out';
+      childUl.style.opacity = '0';
+      
+      // Add toggle icon to parent
+      const toggleIcon = document.createElement('span');
+      toggleIcon.className = 'toc-toggle-icon inline-block ml-2 transition-transform duration-300';
+      toggleIcon.innerHTML = '▶';
+      toggleIcon.style.fontSize = '0.7em';
+      toggleIcon.style.color = 'currentColor';
+      parentLink.appendChild(toggleIcon);
+      
+      // Click to toggle
+      parentLink.addEventListener('click', (e) => {
+        const isCollapsed = childUl.style.maxHeight === '0px';
+        
+        if (isCollapsed) {
+          expandSection(childUl, toggleIcon);
+        } else {
+          collapseSection(childUl, toggleIcon);
+        }
+      });
+    });
+  }
+  
+  // Expand a section
+  function expandSection(childUl, toggleIcon) {
+    childUl.style.maxHeight = childUl.scrollHeight + 'px';
+    childUl.style.opacity = '1';
+    if (toggleIcon) {
+      toggleIcon.style.transform = 'rotate(90deg)';
+    }
+  }
+  
+  // Collapse a section
+  function collapseSection(childUl, toggleIcon) {
+    childUl.style.maxHeight = '0';
+    childUl.style.opacity = '0';
+    if (toggleIcon) {
+      toggleIcon.style.transform = 'rotate(0deg)';
+    }
+  }
+  
+  // Update reading progress
+  function updateReadingProgress() {
+    const article = document.querySelector('article.prose');
+    if (!article) return;
+    
+    const articleTop = article.offsetTop;
+    const articleHeight = article.offsetHeight;
+    const scrollTop = window.scrollY;
+    const windowHeight = window.innerHeight;
+    
+    const progress = Math.min(
+      Math.max(
+        ((scrollTop - articleTop + windowHeight * 0.3) / articleHeight) * 100,
+        0
+      ),
+      100
+    );
+    
+    const progressBar = document.getElementById('reading-progress-bar');
+    const progressText = document.getElementById('reading-progress-text');
+    
+    if (progressBar) progressBar.style.width = `${progress}%`;
+    if (progressText) progressText.textContent = `${Math.round(progress)}%`;
+  }
+  
+  // Highlight active TOC item and auto-expand parent
+  function highlightActiveTocItem() {
+    const headings = document.querySelectorAll('article.prose h2, article.prose h3');
+    const tocLinks = document.querySelectorAll('.toc-content a');
+    
+    let currentHeading = null;
+    
+    // Find current heading
+    headings.forEach(heading => {
+      const rect = heading.getBoundingClientRect();
+      if (rect.top <= 150) {
+        currentHeading = heading;
+      }
+    });
+    
+    // Reset all links
+    tocLinks.forEach(link => {
+      link.classList.remove('text-blue-600', 'dark:text-blue-400', 'font-semibold', 'bg-blue-50', 'dark:bg-blue-900/30', 'px-2', 'py-1', 'rounded', '-ml-2');
+      link.classList.add('text-gray-600', 'dark:text-gray-400');
+    });
+    
+    // Highlight current and expand parent if needed
+    if (currentHeading) {
+      tocLinks.forEach(link => {
+        if (link.getAttribute('href') === `#${currentHeading.id}`) {
+          // Highlight current link
+          link.classList.remove('text-gray-600', 'dark:text-gray-400');
+          link.classList.add('text-blue-600', 'dark:text-blue-400', 'font-semibold', 'bg-blue-50', 'dark:bg-blue-900/30', 'px-2', 'py-1', 'rounded', '-ml-2');
+          
+          // Auto-expand parent section if this is a child item
+          const parentLi = link.closest('.toc-children');
+          if (parentLi) {
+            const toggleIcon = parentLi.parentElement.querySelector(':scope > a .toc-toggle-icon');
+            expandSection(parentLi, toggleIcon);
+          }
+          
+          // If this is a parent (H2), expand its children
+          const currentLi = link.parentElement;
+          if (currentLi.classList.contains('toc-parent')) {
+            const childUl = currentLi.querySelector(':scope > .toc-children');
+            const toggleIcon = link.querySelector('.toc-toggle-icon');
+            if (childUl) {
+              expandSection(childUl, toggleIcon);
+            }
+          }
+          
+          // Collapse other parent sections (not related to current heading)
+          const allParentItems = document.querySelectorAll('.toc-parent');
+          allParentItems.forEach(parentItem => {
+            // Check if this parent is in the current heading's path
+            const isInPath = parentItem.contains(link) || parentItem.querySelector(':scope > a') === link;
+            
+            if (!isInPath) {
+              const childUl = parentItem.querySelector(':scope > .toc-children');
+              const toggleIcon = parentItem.querySelector(':scope > a .toc-toggle-icon');
+              if (childUl && childUl.style.maxHeight !== '0px') {
+                collapseSection(childUl, toggleIcon);
+              }
+            }
+          });
+        }
+      });
+    }
+  }
+  
+  // Initialize on load
+  window.addEventListener('load', () => {
+    initializeTOC();
+    updateReadingProgress();
+    highlightActiveTocItem();
+  });
+  
+  // Update on scroll
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    // Throttle scroll events
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    scrollTimeout = setTimeout(() => {
+      updateReadingProgress();
+      highlightActiveTocItem();
+    }, 50);
+  });
+  
+  // Smooth scroll for TOC links
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.toc-content a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation(); // Prevent parent toggle when clicking child links
+          
+          const targetId = link.getAttribute('href').substring(1);
+          const target = document.getElementById(targetId);
+          if (target) {
+            window.scrollTo({
+              top: target.offsetTop - 100,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    }, 100);
+  });
+</script>
+
+<!-- TOC Styling -->
+<style>
+  /* TOC List Styling */
+  .toc-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .toc-content > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .toc-content ul ul {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  
+  .toc-content li {
+    line-height: 1.625;
+    position: relative;
+  }
+  
+  .toc-content a {
+    display: block;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: rgb(75 85 99);
+    position: relative;
+  }
+  
+  .dark .toc-content a {
+    color: rgb(156 163 175);
+  }
+  
+  .toc-content a:hover {
+    color: rgb(37 99 235);
+  }
+  
+  .dark .toc-content a:hover {
+    color: rgb(96 165 250);
+  }
+  
+  .toc-content > ul > li > a {
+    font-weight: 500;
+  }
+  
+  .toc-content ul ul a {
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+  
+  /* Parent item styling */
+  .toc-parent > a {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  /* Toggle icon */
+  .toc-toggle-icon {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.7em;
+    transition: transform 0.3s ease;
+    color: rgb(107 114 128);
+  }
+  
+  .dark .toc-toggle-icon {
+    color: rgb(156 163 175);
+  }
+  
+  /* Children container */
+  .toc-children {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  }
+  
+  /* Smooth height transitions */
+  .toc-content li {
+    transition: all 0.2s ease;
+  }
+</style>
+{{ end }}

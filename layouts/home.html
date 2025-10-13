@@ -1,7 +1,207 @@
 {{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-    {{ .Summary }}
+<div class="container mx-auto px-4 py-8 md:py-12 lg:py-16">
+  <!-- Hero Section -->
+  <section class="text-center mb-16 md:mb-20 lg:mb-24">
+    <div class="max-w-4xl mx-auto">
+      <!-- 主标题 -->
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
+        {{ .Site.Title }}
+      </h1>
+      
+      <!-- 描述 -->
+      <p class="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8 px-4">
+        {{ .Site.Params.description | default "欢迎来到我的博客" }}
+      </p>
+      
+      <!-- 自定义内容 -->
+      {{ with .Content }}
+      <div class="prose prose-lg dark:prose-invert mx-auto mb-8">
+        {{ . }}
+      </div>
+      {{ end }}
+      
+      <!-- CTA 按钮 -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a 
+          href="#latest-posts" 
+          class="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-semibold transition shadow-lg hover:shadow-xl inline-flex items-center gap-2 text-base md:text-lg"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+          </svg>
+          开始阅读
+        </a>
+        <a 
+          href="/tags" 
+          class="px-6 md:px-8 py-3 md:py-4 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-blue-500 dark:hover:border-blue-400 rounded-lg font-semibold transition shadow-md hover:shadow-lg inline-flex items-center gap-2 text-base md:text-lg"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+          </svg>
+          浏览标签
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 最新博文 Section -->
+  <section id="latest-posts" class="mb-16 md:mb-20">
+    <!-- 标题 -->
+    <div class="flex items-center justify-between mb-8 md:mb-12">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100 inline-flex items-center gap-3">
+        <span class="text-3xl md:text-4xl">✨</span>
+        最新博文
+      </h2>
+      <a 
+        href="/posts" 
+        class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold inline-flex items-center gap-2 text-base md:text-lg group"
+      >
+        查看全部
+        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- 博文卡片网格 -->
+    {{ $recentCount := .Site.Params.recentPostsCount | default 6 }}
+    {{ $recentPosts := where .Site.RegularPages "Type" "posts" | first $recentCount }}
+    
+    {{ if $recentPosts }}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      {{ range $recentPosts }}
+      <article class="group bg-white dark:bg-gray-800 dark:border-1 dark:border-white/10 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full">
+        <!-- 封面图片 -->
+        {{- /* 尝试从 page bundle 获取 cover.* */ -}}
+        {{ $coverImage := .Resources.GetMatch "cover.{png,jpg,jpeg,webp,svg}" }}
+
+        {{ with $coverImage }}
+        {{ $small := $coverImage.Fit "800x450" }}
+        <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-700">
+          <img 
+            src="{{ $small.RelPermalink }}" 
+            srcset="{{ $small.RelPermalink }} 1x, {{ $small.RelPermalink }} 2x"
+            alt="{{ $.Title }}" 
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            loading="lazy"
+          >
+          <!-- 渐变遮罩 -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+        {{ else }}
+        <!-- 默认图片占位符 -->
+        <div class="relative overflow-hidden aspect-video bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
+          <svg class="w-16 h-16 md:w-20 md:h-20 text-white opacity-50 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        {{ end }}
+        
+        <!-- 文章内容 -->
+        <div class="p-5 md:p-6 flex-grow flex flex-col">
+          <!-- 元信息 -->
+          <div class="flex items-center flex-wrap gap-2 mb-3 text-xs md:text-sm">
+            <!-- 分类 -->
+            {{ with .Params.categories }}
+              {{ range first 1 . }}
+              <span class="px-2 md:px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full font-medium">
+                {{ . }}
+              </span>
+              {{ end }}
+            {{ end }}
+            
+            <!-- 日期 -->
+            <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-gray-500 dark:text-gray-400 flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              {{ .Date.Format "2006-01-02" }}
+            </time>
+          </div>
+          
+          <!-- 标题 -->
+          <h3 class="text-xl md:text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
+            <a href="{{ .Permalink }}" class="hover:underline">
+              {{ .Title }}
+            </a>
+          </h3>
+          
+          <!-- 摘要 -->
+          <p class="text-gray-600 dark:text-gray-300 text-sm md:text-base mb-4 line-clamp-3 flex-grow">
+            {{ .Summary | plainify | truncate 120 }}
+          </p>
+          
+          <!-- 底部信息栏 -->
+          <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+            <!-- 阅读时间 -->
+            <span class="text-xs md:text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              {{ .ReadingTime }} 分钟
+            </span>
+            
+            <!-- 标签 -->
+            {{ with .Params.tags }}
+            <div class="flex items-center gap-1 flex-wrap">
+              {{ range first 2 . }}
+              <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs">
+                #{{ . }}
+              </span>
+              {{ end }}
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+    {{ else }}
+    <!-- 空状态 -->
+    <div class="text-center py-16 md:py-20">
+      <div class="text-6xl md:text-8xl mb-6">📝</div>
+      <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">暂无文章</h3>
+      <p class="text-gray-600 dark:text-gray-400">开始创建你的第一篇博文吧！</p>
+    </div>
+    {{ end }}
+  </section>
+
+  <!-- 热门标签/分类 Section (可选) -->
+  {{ if .Site.Taxonomies.tags }}
+  <section class="mb-16 md:mb-20">
+    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8 md:mb-10 inline-flex items-center gap-3">
+      <span class="text-2xl md:text-3xl">🏷️</span>
+      热门标签
+    </h2>
+    
+    <div class="flex flex-wrap gap-3 md:gap-4">
+      {{ range first 12 .Site.Taxonomies.tags.ByCount }}
+      {{ $fontSize := add 0.875 (mul .Count 0.05) }}
+      <a 
+        href="{{ .Page.Permalink }}" 
+        class="px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 hover:from-blue-100 hover:to-purple-100 dark:hover:from-blue-900/50 dark:hover:to-purple-900/50 text-gray-900 dark:text-gray-100 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md inline-flex items-center gap-2 group"
+        style="font-size: {{ $fontSize }}rem"
+      >
+        <span class="font-semibold">{{ .Page.Title }}</span>
+        <span class="px-2 py-0.5 bg-blue-600 text-white rounded-full text-xs font-bold group-hover:scale-110 transition-transform">
+          {{ .Count }}
+        </span>
+      </a>
+      {{ end }}
+    </div>
+    
+    <div class="text-center mt-8">
+      <a 
+        href="/tags" 
+        class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold group"
+      >
+        查看所有标签
+        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
   {{ end }}
+</div>
 {{ end }}

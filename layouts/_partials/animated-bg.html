@@ -1,0 +1,58 @@
+{{- /*
+Renders an animated background based on site configuration.
+
+@context {page} . The current page context.
+
+Supports multiple animation types:
+- particles: Particle.js based particle system
+- waves: CSS-based wave animation
+- gradient: Animated gradient background
+- none: No animation
+
+Configuration in hugo.toml:
+  [params.animatedBackground]
+    enable = true
+    type = "particles"
+    homeOnly = true
+    disableOnMobile = true
+
+@example: {{ partial "animated-background.html" . }}
+*/}}
+
+{{- $config := site.Params.animatedBackground }}
+{{- if not $config }}
+  {{- $config = dict "enable" false }}
+{{- end }}
+
+{{- $enabled := $config.enable | default false }}
+{{- $type := $config.type | default "particles" }}
+{{- $homeOnly := $config.homeOnly | default true }}
+{{- $disableOnMobile := $config.disableOnMobile | default true }}
+
+{{- /* 检查是否应该显示动画 */ -}}
+{{- $shouldShow := false }}
+{{- if $enabled }}
+  {{- if $homeOnly }}
+    {{- if .IsHome }}
+      {{- $shouldShow = true }}
+    {{- end }}
+  {{- else }}
+    {{- $shouldShow = true }}
+  {{- end }}
+{{- end }}
+
+{{- if $shouldShow }}
+<div 
+  id="animated-background" 
+  class="fixed inset-0 -z-10 overflow-hidden {{ if $disableOnMobile }}hidden md:block{{ end }}"
+  data-animation-type="{{ $type }}"
+>
+  {{- if eq $type "particles" }}
+    {{- partial "animations/particles.html" . }}
+  {{- else if eq $type "waves" }}
+    {{- partial "animations/waves.html" . }}
+  {{- else if eq $type "gradient" }}
+    {{- partial "animations/gradient.html" . }}
+  {{- end }}
+</div>
+{{- end }}

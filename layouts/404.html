@@ -1,0 +1,165 @@
+{{ define "main" }}
+<div class="min-h-screen flex items-center justify-center px-4 py-12">
+  <div class="max-w-4xl w-full">
+    <!-- 404 错误提示区域 -->
+    <div class="text-center mb-12">
+      <!-- 大号 404 -->
+      <div class="mb-8">
+        <h1 class="text-[150px] md:text-[200px] lg:text-[250px] font-bold leading-none bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-pulse">
+          404
+        </h1>
+      </div>
+      
+      <!-- 错误信息 -->
+      <div class="space-y-4 mb-8">
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-100">
+          页面未找到
+        </h2>
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+          哎呀！您正在寻找的页面不存在
+        </p>
+        <p class="text-lg text-gray-500 dark:text-gray-400">
+          它可能已被移动或删除。要不搜索一下？
+        </p>
+      </div>
+      
+      <!-- 搜索框 -->
+      <div class="max-w-2xl mx-auto mb-8">
+        <form class="relative" action="/search" method="get">
+          <input 
+            type="search" 
+            name="q"
+            placeholder="搜索文章、标签、分类..." 
+            class="w-full px-6 py-4 pr-32 text-lg border-2 border-gray-300 dark:border-gray-600 rounded-full bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 transition shadow-lg"
+          >
+          <button 
+            type="submit"
+            class="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition shadow-md hover:shadow-lg"
+          >
+            搜索
+          </button>
+        </form>
+      </div>
+      
+      <!-- 快捷链接 -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a 
+          href="/" 
+          class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition shadow-md hover:shadow-lg inline-flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          返回首页
+        </a>
+        <a 
+          href="/posts" 
+          class="px-6 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-blue-500 dark:hover:border-blue-400 rounded-lg font-semibold transition shadow-md hover:shadow-lg inline-flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+          </svg>
+          浏览文章
+        </a>
+        <a 
+          href="/tags" 
+          class="px-6 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 hover:border-blue-500 dark:hover:border-blue-400 rounded-lg font-semibold transition shadow-md hover:shadow-lg inline-flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+          </svg>
+          标签
+        </a>
+      </div>
+    </div>
+
+    <!-- 推荐文章列表 -->
+    <div class="mt-16">
+      <h3 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
+        📚 推荐阅读
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {{ range first 6 (where .Site.RegularPages "Type" "posts") }}
+        <article class="group bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition overflow-hidden">
+          <!-- 特色图片 -->
+          {{ with .Params.featured_image }}
+          <div class="relative overflow-hidden aspect-video">
+            <img 
+              src="{{ . }}" 
+              alt="{{ $.Title }}" 
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+              loading="lazy"
+            >
+          </div>
+          {{ else }}
+          <div class="relative overflow-hidden aspect-video bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
+            <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          {{ end }}
+          
+          <!-- 文章信息 -->
+          <div class="p-5">
+            <!-- 分类/标签 -->
+            <div class="flex items-center gap-2 mb-3 text-xs">
+              {{ with .Params.categories }}
+                {{ range first 1 . }}
+                <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full">
+                  {{ . }}
+                </span>
+                {{ end }}
+              {{ end }}
+              <span class="text-gray-500 dark:text-gray-400">
+                {{ .Date.Format "2006-01-02" }}
+              </span>
+            </div>
+            
+            <!-- 标题 -->
+            <h4 class="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition line-clamp-2">
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </h4>
+            
+            <!-- 摘要 -->
+            <p class="text-gray-600 dark:text-gray-300 text-sm line-clamp-2 mb-3">
+              {{ .Summary | plainify | truncate 100 }}
+            </p>
+            
+            <!-- 底部信息 -->
+            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span class="flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {{ .ReadingTime }} 分钟
+              </span>
+              {{ with .Params.tags }}
+                {{ range first 1 . }}
+                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">
+                  #{{ . }}
+                </span>
+                {{ end }}
+              {{ end }}
+            </div>
+          </div>
+        </article>
+        {{ end }}
+      </div>
+      
+      <!-- 查看更多按钮 -->
+      <div class="text-center mt-8">
+        <a 
+          href="/posts" 
+          class="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-semibold transition shadow-lg hover:shadow-xl"
+        >
+          查看所有文章
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}

@@ -3,9 +3,6 @@
 /* Tailwind v4 - 配置暗色模式使用 class 策略 */
 @variant dark (.dark &);
 
-/* Hugo 内容源 */
-@source "../../hugo_stats.json";
-
 /* ================================================
    平滑过渡效果（推荐）
    ================================================ */
@@ -17,6 +14,7 @@ html {
 
 body {
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: inter, noto sans sc, pingfang sc, hiragino sans gb, microsoft yahei, arial, sans-serif;
 }
 
 /* ================================================

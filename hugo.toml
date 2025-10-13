@@ -5,50 +5,111 @@ title = 'My New Hugo Site'
 [menus]
   [[menus.main]]
     name = 'Home'
+    title = "首页"
     pageRef = '/'
     weight = 10
 
   [[menus.main]]
     name = 'Posts'
+    title = "文章"
     pageRef = '/posts'
     weight = 20
 
   [[menus.main]]
     name = 'Tags'
+    title = "标签"
     pageRef = '/tags'
     weight = 30
+
+[build]
+  [build.buildStats]
+    enable = false
 
 [module]
   [module.hugoVersion]
     extended = true
-    min = "0.148.2"
+    min = "0.151.0"
   
-  # 定义主题的挂载点
+  # 挂载 Font Awesome 到 assets
+  [[module.mounts]]
+    source = "node_modules/@fortawesome/fontawesome-free/css"
+    target = "assets/css"
+  # 挂载 Font Awesome 到 assets
+  [[module.mounts]]
+    source = "node_modules/@fortawesome/fontawesome-free/webfonts"
+    target = "assets/webfonts"
+  
+  # 同时也挂载一份到 static 作为备用
+  [[module.mounts]]
+    source = "node_modules/@fortawesome/fontawesome-free/webfonts"
+    target = "static/webfonts"
+  
+  # 挂载主题自己的 assets
   [[module.mounts]]
     source = "assets"
     target = "assets"
   
+  # 挂载主题的 layouts
   [[module.mounts]]
     source = "layouts"
     target = "layouts"
   
+  # 挂载主题的 static
   [[module.mounts]]
     source = "static"
     target = "static"
-  
-  [[module.mounts]]
-    source = "data"
-    target = "data"
-  
-  [[module.mounts]]
-    source = "i18n"
-    target = "i18n"
-  
-  [[module.mounts]]
-    source = "archetypes"
-    target = "archetypes"
 
   [[module.mounts]]
-    disableWatch = true
-    source = 'hugo_stats.json'
-    target = 'assets/notwatching/hugo_stats.json'
+    source = "content"
+    target = "content"    
+
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 2
+
+[params]
+  # 首页配置
+  description = "欢迎来到我的博客，分享技术、思考与生活"
+  author = "Your Name"
+  
+  # 首页最新博文数量
+  recentPostsCount = 3
+  
+  # 动画背景配置
+  [params.animatedBackground]
+    # 是否启用动画背景
+    enable = true
+    
+    # 动画类型: "particles" | "waves" | "gradient" | "none"
+    type = "particles"
+    
+    # 仅在首页显示 (true) 或所有页面显示 (false)
+    homeOnly = true
+    
+    # 在移动端禁用动画以提升性能
+    disableOnMobile = true
+    
+    # Particles 配置
+    [params.animatedBackground.particles]
+      number = 80
+      color = "#4F46E5"
+      opacity = 0.5
+      size = 3
+      lineColor = "#4F46E5"
+      lineOpacity = 0.4
+      moveSpeed = 2
+    
+    # Waves 配置
+    [params.animatedBackground.waves]
+      waveCount = 3
+      primaryColor = "rgba(79, 70, 229, 0.1)"
+      animationDuration = 15
+    
+    # Gradient 配置
+    [params.animatedBackground.gradient]
+      fromLight = "from-blue-50"
+      toLight = "to-indigo-100"
+      fromDark = "dark:from-gray-900"
+      toDark = "dark:to-blue-900"

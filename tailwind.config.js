@@ -1,20 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+// Tailwind v4 is CSS-first and prefers configuration inside your CSS files
+// (see TAILWIND_V4_DARK_MODE_FIX.md). This minimal config file exists so
+// tooling that expects a config won't fail. You can safely remove this file
+// if you fully rely on the CSS @variant/@source approach.
 export default {
-  // 使用 class 模式 - 最灵活的暗色模式控制
-  darkMode: 'class',
-  
-  // Hugo 会自动扫描这些文件来提取类名
   content: [
     './hugo_stats.json',
     './layouts/**/*.html',
     './content/**/*.{md,html}',
+    './exampleSite/**/*.{html,md,js}',
+    './assets/**/*.{css,js}',
   ],
-  
+  darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
-      // 自定义颜色
       colors: {
-        // 可以在这里添加品牌色
         primary: {
           50: '#eff6ff',
           100: '#dbeafe',
@@ -28,8 +28,6 @@ export default {
           900: '#1e3a8a',
         },
       },
-      
-      // 自定义字体
       fontFamily: {
         sans: [
           'ui-sans-serif',
@@ -43,14 +41,11 @@ export default {
           'sans-serif',
         ],
       },
-      
-      // 自定义动画
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',
         'slide-down': 'slideDown 0.3s ease-out',
         'slide-up': 'slideUp 0.3s ease-out',
       },
-      
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
@@ -67,10 +62,7 @@ export default {
       },
     },
   },
-  
   plugins: [
-    // 可以添加官方插件
-    // require('@tailwindcss/typography'),
-    // require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
   ],
 }

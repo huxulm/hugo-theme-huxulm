@@ -1,9 +1,15 @@
 {
     "scripts": {
-        "dev": "hugo server -D --noHTTPCache -s exampleSite --themesDir ../.. -t hugo-theme-huxulm"
+        "dev": "hugo server -D --noHTTPCache --disableFastRender -s exampleSite --themesDir ../.. -t hugo-theme-huxulm",
+        "build": "hugo --minify -s exampleSite --themesDir ../.. -t hugo-theme-huxulm"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^7.1.0",
         "@tailwindcss/cli": "^4.1.14",
+        "@tailwindcss/postcss": "^4.1.14",
+        "@tailwindcss/typography": "^0.5.19",
+        "postcss": "^8.4.47",
+        "postcss-cli": "^11.0.0",
         "tailwindcss": "^4.1.14"
     }
 }

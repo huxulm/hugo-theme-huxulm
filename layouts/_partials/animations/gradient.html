@@ -1,0 +1,56 @@
+{{- /*
+Animated gradient background
+Lightweight CSS-only solution
+*/ -}}
+
+{{- $config := site.Params.animatedBackground.gradient }}
+{{- $fromLight := $config.fromLight | default "from-blue-50" }}
+{{- $toLight := $config.toLight | default "to-indigo-100" }}
+{{- $fromDark := $config.fromDark | default "dark:from-gray-900" }}
+{{- $toDark := $config.toDark | default "dark:to-blue-900" }}
+
+<div class="gradient-background bg-gradient-to-br {{ $fromLight }} {{ $toLight }} {{ $fromDark }} {{ $toDark }}">
+  <div class="gradient-overlay"></div>
+</div>
+
+<style>
+.gradient-background {
+  position: absolute;
+  inset: 0;
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* 尊重用户的动画偏好设置 */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-background,
+  .gradient-overlay {
+    animation: none;
+  }
+}
+</style>
