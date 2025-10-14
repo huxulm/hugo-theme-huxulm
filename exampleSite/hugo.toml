@@ -2,6 +2,16 @@ baseURL = 'https://example.org/'
 languageCode = 'zh-CN'
 title = '我的技术博客'
 
+[outputs]
+  home = ["HTML", "JSON"]
+
+[outputFormats]
+  [outputFormats.JSON]
+    mediaType = "application/json"
+    baseName = "index"
+    isPlainText = true
+    notAlternative = true
+
 [params]
   description = "分享技术见解、编程经验与生活感悟"
   author = "Hugo Theme Huxulm"
@@ -11,8 +21,11 @@ title = '我的技术博客'
   
   # 动画背景配置
   [params.animatedBackground]
+    enable = true
+    homeOnly = false
     # 动画类型: "particles" | "waves" | "gradient" | "none"
     type = "particles"
+
 [build]
   writeStats = true
   
@@ -69,4 +82,4 @@ title = '我的技术博客'
   [[module.imports]]
     #path = "github.com/huxulm/hugo-theme-huxulm"
     # 如果是本地开发，可以用相对路径替代：
-    path = "../.."
+    path = "../.."    

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" style="background: transparent;">
+  <defs>
+    <!-- 星星发光效果滤镜 -->
+    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 强烈发光效果 -->
+    <filter id="brightStarGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 星星形状定义 -->
+    <g id="star4point">
+      <path d="M 0,-8 L 2,0 L 0,8 L -2,0 Z"/>
+      <path d="M -8,0 L 0,2 L 8,0 L 0,-2 Z"/>
+    </g>
+  </defs>
+
+  <g transform="translate(24, 24)">
+    <circle cx="0" cy="0" r="3" filter="url(#brightStarGlow)" opacity="0.9">
+    </circle>
+    <use href="#star4point" transform="scale(2.5)" fill="#f8f0c1ff" opacity="0.8"/>
+  </g>  
+</svg>

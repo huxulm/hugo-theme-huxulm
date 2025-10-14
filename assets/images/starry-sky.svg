@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" style="background: radial-gradient(ellipse at center, #0c1445 0%, #000000 100%);">
+  <defs>
+    <!-- 星星发光效果滤镜 -->
+    <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 强烈发光效果 -->
+    <filter id="brightStarGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 闪烁动画 -->
+    <animate id="twinkle1" attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite"/>
+    <animate id="twinkle2" attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite"/>
+    <animate id="twinkle3" attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+    <animate id="twinkle4" attributeName="opacity" values="0.4;1;0.4" dur="3.5s" repeatCount="indefinite"/>
+    
+    <!-- 星星形状定义 -->
+    <g id="star4point">
+      <path d="M 0,-8 L 2,0 L 0,8 L -2,0 Z" fill="white"/>
+      <path d="M -8,0 L 0,2 L 8,0 L 0,-2 Z" fill="white"/>
+    </g>
+    
+    <g id="star6point">
+      <path d="M 0,-6 L 1.5,-1.5 L 6,0 L 1.5,1.5 L 0,6 L -1.5,1.5 L -6,0 L -1.5,-1.5 Z" fill="white"/>
+    </g>
+    
+    <!-- 银河系背景渐变 -->
+    <linearGradient id="milkyWay" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a3e;stop-opacity:0"/>
+      <stop offset="30%" style="stop-color:#2d2d5f;stop-opacity:0.3"/>
+      <stop offset="60%" style="stop-color:#3a3a6f;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#1a1a3e;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 银河系背景带 -->
+  <path d="M 0 300 Q 500 200 1000 250 Q 1500 300 1920 200 L 1920 500 Q 1500 600 1000 550 Q 500 500 0 600 Z" 
+        fill="url(#milkyWay)" opacity="0.4"/>
+  
+  <!-- 大型明亮星星 (1等星) -->
+  <!-- 北极星 -->
+  <g transform="translate(960, 150)">
+    <circle cx="0" cy="0" r="3" fill="#ffffcc" filter="url(#brightStarGlow)" opacity="0.9">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <use href="#star4point" transform="scale(1.5)" fill="#ffffcc" opacity="0.8"/>
+  </g>
+  
+  <!-- 织女星 -->
+  <g transform="translate(1200, 280)">
+    <circle cx="0" cy="0" r="2.5" fill="#b3d9ff" filter="url(#brightStarGlow)" opacity="0.8">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <use href="#star4point" transform="scale(1.2)" fill="#b3d9ff" opacity="0.7"/>
+  </g>
+  
+  <!-- 牛郎星 -->
+  <g transform="translate(800, 450)">
+    <circle cx="0" cy="0" r="2.5" fill="#ffccb3" filter="url(#brightStarGlow)" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2.8s" repeatCount="indefinite"/>
+    </circle>
+    <use href="#star4point" transform="scale(1.3)" fill="#ffccb3" opacity="0.8"/>
+  </g>
+  
+  <!-- 天狼星 -->
+  <g transform="translate(400, 700)">
+    <circle cx="0" cy="0" r="3.5" fill="#ffffff" filter="url(#brightStarGlow)" opacity="0.9">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <use href="#star6point" transform="scale(1.5)" fill="#ffffff" opacity="0.9"/>
+  </g>
+  
+  <!-- 中等亮度星星 (2-3等星) -->
+  <circle cx="150" cy="200" r="2" fill="#ffffcc" filter="url(#starGlow)" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+  <use href="#star4point" transform="translate(150, 200)" fill="#ffffcc" opacity="0.6"/>
+  
+  <circle cx="350" cy="150" r="1.8" fill="#b3d9ff" filter="url(#starGlow)" opacity="0.6">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="550" cy="320" r="2.2" fill="#ffccb3" filter="url(#starGlow)" opacity="0.7">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.7s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="1400" cy="180" r="1.9" fill="#ffffcc" filter="url(#starGlow)" opacity="0.6">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.8s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="1600" cy="350" r="2.1" fill="#b3d9ff" filter="url(#starGlow)" opacity="0.7">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="3.2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <circle cx="1750" cy="220" r="1.7" fill="#ffccb3" filter="url(#starGlow)" opacity="0.6">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.1s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- 小型暗星 (4-5等星) -->
+  <circle cx="80" cy="100" r="1" fill="#ffffff" opacity="0.5"/>
+  <circle cx="200" cy="80" r="1" fill="#ffffcc" opacity="0.4"/>
+  <circle cx="320" cy="90" r="1" fill="#b3d9ff" opacity="0.5"/>
+  <circle cx="450" cy="70" r="1" fill="#ffffff" opacity="0.4"/>
+  <circle cx="580" cy="110" r="1" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="720" cy="85" r="1" fill="#ffccb3" opacity="0.4"/>
+  <circle cx="850" cy="95" r="1" fill="#ffffff" opacity="0.5"/>
+  <circle cx="980" cy="75" r="1" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="1100" cy="105" r="1" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="1250" cy="90" r="1" fill="#ffffff" opacity="0.4"/>
+  <circle cx="1380" cy="80" r="1" fill="#ffccb3" opacity="0.5"/>
+  <circle cx="1520" cy="100" r="1" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="1650" cy="85" r="1" fill="#ffffff" opacity="0.5"/>
+  <circle cx="1780" cy="95" r="1" fill="#ffffcc" opacity="0.4"/>
+  <circle cx="1850" cy="105" r="1" fill="#ffccb3" opacity="0.5"/>
+  
+  <!-- 更多中层星星 -->
+  <circle cx="100" cy="400" r="1.2" fill="#ffffcc" opacity="0.6">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="250" cy="380" r="1.5" fill="#b3d9ff" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="450" cy="420" r="1.3" fill="#ffccb3" opacity="0.6">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3.7s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="650" cy="390" r="1.4" fill="#ffffff" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1100" cy="400" r="1.6" fill="#ffffcc" opacity="0.7">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3.3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1300" cy="420" r="1.3" fill="#b3d9ff" opacity="0.6">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1500" cy="380" r="1.5" fill="#ffccb3" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.9s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1700" cy="410" r="1.2" fill="#ffffff" opacity="0.6">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="4.4s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- 底部星空 -->
+  <circle cx="120" cy="600" r="1.4" fill="#ffffcc" opacity="0.6">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="280" cy="650" r="1.7" fill="#b3d9ff" opacity="0.7">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.9s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="480" cy="620" r="1.5" fill="#ffccb3" opacity="0.7">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4.7s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="680" cy="680" r="1.6" fill="#ffffff" opacity="0.6">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3.1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="900" cy="640" r="1.3" fill="#ffffcc" opacity="0.7">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="4.3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1100" cy="670" r="1.8" fill="#b3d9ff" opacity="0.7">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1300" cy="630" r="1.4" fill="#ffccb3" opacity="0.6">
+    <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1500" cy="660" r="1.5" fill="#ffffff" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4.1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1700" cy="620" r="1.2" fill="#ffffcc" opacity="0.6">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3.4s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- 更多小星星点缀 -->
+  <circle cx="60" cy="300" r="0.8" fill="#ffffff" opacity="0.4"/>
+  <circle cx="180" cy="320" r="0.9" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="300" cy="280" r="0.7" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="420" cy="310" r="0.8" fill="#ffccb3" opacity="0.5"/>
+  <circle cx="540" cy="290" r="0.9" fill="#ffffff" opacity="0.4"/>
+  <circle cx="660" cy="330" r="0.7" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="780" cy="270" r="0.8" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="900" cy="340" r="0.9" fill="#ffccb3" opacity="0.5"/>
+  <circle cx="1020" cy="310" r="0.7" fill="#ffffff" opacity="0.4"/>
+  <circle cx="1140" cy="280" r="0.8" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="1260" cy="320" r="0.9" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="1380" cy="290" r="0.7" fill="#ffccb3" opacity="0.5"/>
+  <circle cx="1500" cy="310" r="0.8" fill="#ffffff" opacity="0.4"/>
+  <circle cx="1620" cy="280" r="0.9" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="1740" cy="320" r="0.7" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="1860" cy="300" r="0.8" fill="#ffccb3" opacity="0.5"/>
+  
+  <!-- 更多底部小星 -->
+  <circle cx="50" cy="800" r="0.8" fill="#ffffff" opacity="0.4"/>
+  <circle cx="170" cy="820" r="0.9" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="290" cy="790" r="0.7" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="410" cy="810" r="0.8" fill="#ffccb3" opacity="0.5"/>
+  <circle cx="530" cy="780" r="0.9" fill="#ffffff" opacity="0.4"/>
+  <circle cx="650" cy="830" r="0.7" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="770" cy="800" r="0.8" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="890" cy="820" r="0.9" fill="#ffccb3" opacity="0.5"/>
+  <circle cx="1010" cy="790" r="0.7" fill="#ffffff" opacity="0.4"/>
+  <circle cx="1130" cy="810" r="0.8" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="1250" cy="780" r="0.9" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="1370" cy="830" r="0.7" fill="#ffccb3" opacity="0.5"/>
+  <circle cx="1490" cy="800" r="0.8" fill="#ffffff" opacity="0.4"/>
+  <circle cx="1610" cy="820" r="0.9" fill="#ffffcc" opacity="0.5"/>
+  <circle cx="1730" cy="790" r="0.7" fill="#b3d9ff" opacity="0.4"/>
+  <circle cx="1850" cy="810" r="0.8" fill="#ffccb3" opacity="0.5"/>
+  
+  <!-- 远景微小星点 -->
+  <circle cx="30" cy="50" r="0.5" fill="#ffffff" opacity="0.3"/>
+  <circle cx="130" cy="45" r="0.5" fill="#ffffcc" opacity="0.3"/>
+  <circle cx="230" cy="55" r="0.5" fill="#b3d9ff" opacity="0.3"/>
+  <circle cx="330" cy="40" r="0.5" fill="#ffffff" opacity="0.3"/>
+  <circle cx="430" cy="60" r="0.5" fill="#ffffcc" opacity="0.3"/>
+  <circle cx="530" cy="35" r="0.5" fill="#b3d9ff" opacity="0.3"/>
+  <circle cx="630" cy="50" r="0.5" fill="#ffccb3" opacity="0.3"/>
+  <circle cx="730" cy="45" r="0.5" fill="#ffffff" opacity="0.3"/>
+  <circle cx="830" cy="55" r="0.5" fill="#ffffcc" opacity="0.3"/>
+  <circle cx="930" cy="40" r="0.5" fill="#b3d9ff" opacity="0.3"/>
+  <circle cx="1030" cy="60" r="0.5" fill="#ffffff" opacity="0.3"/>
+  <circle cx="1130" cy="35" r="0.5" fill="#ffffcc" opacity="0.3"/>
+  <circle cx="1230" cy="50" r="0.5" fill="#b3d9ff" opacity="0.3"/>
+  <circle cx="1330" cy="45" r="0.5" fill="#ffccb3" opacity="0.3"/>
+  <circle cx="1430" cy="55" r="0.5" fill="#ffffff" opacity="0.3"/>
+  <circle cx="1530" cy="40" r="0.5" fill="#ffffcc" opacity="0.3"/>
+  <circle cx="1630" cy="60" r="0.5" fill="#b3d9ff" opacity="0.3"/>
+  <circle cx="1730" cy="35" r="0.5" fill="#ffccb3" opacity="0.3"/>
+  <circle cx="1830" cy="50" r="0.5" fill="#ffffff" opacity="0.3"/>
+  
+  <!-- 流星 -->
+  <g opacity="0.8">
+    <path d="M 1800 100 L 1750 120 L 1740 115 L 1790 95 Z" fill="#ffffff">
+      <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite" begin="0s"/>
+    </path>
+    <circle cx="1740" cy="115" r="2" fill="#ffffff">
+      <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite" begin="0s"/>
+    </circle>
+  </g>
+  
+  <!-- 另一颗流星 -->
+  <g opacity="0.6">
+    <path d="M 300 250 L 250 270 L 240 265 L 290 245 Z" fill="#b3d9ff">
+      <animate attributeName="opacity" values="0;1;0" dur="0.8s" repeatCount="indefinite" begin="3s"/>
+    </path>
+    <circle cx="240" cy="265" r="1.5" fill="#b3d9ff">
+      <animate attributeName="opacity" values="0;1;0" dur="0.8s" repeatCount="indefinite" begin="3s"/>
+    </circle>
+  </g>
+</svg>

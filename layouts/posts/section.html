@@ -1,0 +1,577 @@
+{{ define "main" }}
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  
+  <!-- 页面头部 -->
+  <header class="mb-12 md:mb-16 text-center">
+    <div class="max-w-4xl mx-auto">
+      <!-- 页面标题 -->
+      
+      <!-- 页面描述 -->
+      <div class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8">
+        {{ with .Content }}
+          <div class="prose prose-lg dark:prose-invert mx-auto">
+            {{ . }}
+          </div>
+        {{ else }}
+          <p class="text-2xl md:text-3xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">{{ .Description | default "探索与分享，发现有趣的技术见解与生活感悟" }}</p>
+        {{ end }}
+      </div>
+    </div>
+  </header>
+
+  <!-- 主内容区域：左侧内容 + 右侧筛选器 -->
+  <div class="flex flex-col xl:flex-row gap-8">
+    
+    <!-- 左侧：主要内容区域 -->
+    <div class="flex-1 xl:max-w-4xl">
+      
+      <!-- 移动端筛选按钮 -->
+      <div class="xl:hidden mb-6">
+        <button 
+          id="mobile-filter-toggle"
+          class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        >
+          <span class="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"></path>
+            </svg>
+            筛选文章
+          </span>
+          <svg class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+      </div>
+  
+      <!-- 文章列表 -->
+      {{ $paginator := .Paginate .Pages 4 }}
+      {{ if $paginator.Pages }}
+      
+      <!-- 文章卡片网格 -->
+      <main class="mb-12 md:mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+      {{ range $paginator.Pages }}
+      <article 
+        class="group bg-white dark:bg-gray-800 dark:border-1 dark:border-white/10 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full hover:-translate-y-1"
+        data-article="true"
+        data-date="{{ .Date.Format "2006-01-02" }}"
+        data-title="{{ .Title }}"
+        data-categories="{{ if .Params.categories }}{{ delimit .Params.categories "," }}{{ end }}"
+        data-tags="{{ if .Params.tags }}{{ delimit .Params.tags "," }}{{ end }}"
+        data-reading-time="{{ .ReadingTime }}"
+      >
+        
+        <!-- 封面图片 -->
+        {{- /* 尝试获取 featured_image 或 cover 图片 */ -}}
+        {{ $coverImage := "" }}
+        {{ if .Params.featured_image }}
+          {{ $coverImage = .Resources.GetMatch .Params.featured_image }}
+        {{ else }}
+          {{ $coverImage = .Resources.GetMatch "cover.{png,jpg,jpeg,webp,svg}" }}
+          {{ if not $coverImage }}
+            {{ $coverImage = .Resources.GetMatch "featured.{png,jpg,jpeg,webp,svg}" }}
+          {{ end }}
+        {{ end }}
+
+        {{ with $coverImage }}
+        {{ $small := $coverImage.Fit "800x450" }}
+        <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-700">
+          <img 
+            src="{{ $small.RelPermalink }}" 
+            alt="{{ $.Title }}" 
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            loading="lazy"
+          >
+          <!-- 渐变遮罩 -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          <!-- 阅读时间标签 -->
+          <div class="absolute top-3 right-3">
+            <span class="px-2 py-1 bg-black/60 backdrop-blur-sm text-white text-xs rounded-full inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              {{ $.ReadingTime }}分钟
+            </span>
+          </div>
+        </div>
+        {{ else }}
+        <!-- 默认渐变占位符 -->
+        <div class="relative overflow-hidden aspect-video bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
+          <svg class="w-16 h-16 md:w-20 md:h-20 text-white opacity-60 group-hover:scale-110 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          
+          <!-- 阅读时间标签 -->
+          <div class="absolute top-3 right-3">
+            <span class="px-2 py-1 bg-black/40 backdrop-blur-sm text-white text-xs rounded-full inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              {{ $.ReadingTime }}分钟
+            </span>
+          </div>
+        </div>
+        {{ end }}
+        
+        <!-- 文章内容 -->
+        <div class="p-5 md:p-6 flex-grow flex flex-col">
+          <!-- 元信息 -->
+          <div class="flex items-center flex-wrap gap-2 mb-3">
+            <!-- 分类 -->
+            {{ with .Params.categories }}
+              {{ range first 1 . }}
+              <span class="px-2 md:px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full font-medium text-xs md:text-sm">
+                {{ . }}
+              </span>
+              {{ end }}
+            {{ end }}
+            
+            <!-- 日期 -->
+            <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-gray-500 dark:text-gray-400 flex items-center gap-1 text-xs md:text-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              {{ .Date.Format "01-02" }}
+            </time>
+            
+            <!-- 置顶标识 -->
+            {{ if .Params.sticky }}
+            <span class="px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-full font-medium text-xs inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+              </svg>
+              置顶
+            </span>
+            {{ end }}
+          </div>
+          
+          <!-- 标题 -->
+          <h2 class="text-xl md:text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
+            <a href="{{ .Permalink }}" class="hover:underline">
+              {{ .Title }}
+            </a>
+          </h2>
+          
+          <!-- 摘要 -->
+          <p class="text-gray-600 dark:text-gray-300 text-sm md:text-base mb-4 line-clamp-3 flex-grow leading-relaxed">
+            {{ .Summary | plainify | truncate 140 }}
+          </p>
+          
+          <!-- 底部信息栏 -->
+          <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700 mt-auto">
+            <!-- 文章统计 -->
+            <div class="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+              <!-- 字数 -->
+              <span class="flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                {{ .WordCount }}字
+              </span>
+            </div>
+            
+            <!-- 标签 -->
+            {{ with .Params.tags }}
+            <div class="flex items-center gap-1 flex-wrap">
+              {{ range first 2 . }}
+              <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors">
+                #{{ . }}
+              </span>
+              {{ end }}
+              {{ if gt (len .) 2 }}
+              <span class="text-gray-500 dark:text-gray-400 text-xs">+{{ sub (len .) 2 }}</span>
+              {{ end }}
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      </article>
+        {{ end }}
+        </div>
+      </main>
+      
+      <!-- 分页导航 -->
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="flex items-center justify-center" aria-label="分页导航">
+    <div class="flex items-center gap-2 md:gap-3">
+      
+      <!-- 上一页 -->
+      {{ if $paginator.HasPrev }}
+      <a href="{{ $paginator.Prev.URL }}" 
+         class="px-3 md:px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors inline-flex items-center gap-2 text-sm md:text-base">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <span class="hidden md:inline">上一页</span>
+      </a>
+      {{ else }}
+      <span class="px-3 md:px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 rounded-lg inline-flex items-center gap-2 text-sm md:text-base cursor-not-allowed">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <span class="hidden md:inline">上一页</span>
+      </span>
+      {{ end }}
+      
+      <!-- 页码 -->
+      <div class="flex items-center gap-1 md:gap-2">
+        {{ $currentPage := $paginator.PageNumber }}
+        {{ $totalPages := $paginator.TotalPages }}
+        
+        <!-- 第一页 -->
+        {{ if gt $currentPage 3 }}
+        <a href="{{ $paginator.First.URL }}" 
+           class="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors text-sm md:text-base">
+          1
+        </a>
+        {{ if gt $currentPage 4 }}
+        <span class="px-2 text-gray-500 dark:text-gray-400">...</span>
+        {{ end }}
+        {{ end }}
+        
+        <!-- 当前页前后页码 -->
+        {{ range $paginator.Pagers }}
+        {{ if and (ge .PageNumber (sub $currentPage 2)) (le .PageNumber (add $currentPage 2)) }}
+          {{ if eq .PageNumber $currentPage }}
+          <span class="w-10 h-10 px-2 py-2 text-center bg-blue-600 text-white rounded-lg text-sm md:text-base font-semibold">
+            {{ .PageNumber }}
+          </span>
+          {{ else }}
+          <a href="{{ .URL }}" 
+             class="w-10 h-10 px-2 py-2 text-center bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors text-sm md:text-base">
+            {{ .PageNumber }}
+          </a>
+          {{ end }}
+        {{ end }}
+        {{ end }}
+        
+        <!-- 最后一页 -->
+        {{ if lt $currentPage (sub $totalPages 2) }}
+        {{ if lt $currentPage (sub $totalPages 3) }}
+        <span class="px-2 text-gray-500 dark:text-gray-400">...</span>
+        {{ end }}
+        <a href="{{ $paginator.Last.URL }}" 
+           class="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors text-sm md:text-base">
+          {{ $totalPages }}
+        </a>
+        {{ end }}
+      </div>
+      
+      <!-- 下一页 -->
+      {{ if $paginator.HasNext }}
+      <a href="{{ $paginator.Next.URL }}" 
+         class="px-3 md:px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg transition-colors inline-flex items-center gap-2 text-sm md:text-base">
+        <span class="hidden md:inline">下一页</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+      {{ else }}
+      <span class="px-3 md:px-4 py-2 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 rounded-lg inline-flex items-center gap-2 text-sm md:text-base cursor-not-allowed">
+        <span class="hidden md:inline">下一页</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </span>
+      {{ end }}
+    </div>
+    
+    <!-- 页码信息 -->
+    <div class="ml-4 md:ml-8 text-sm text-gray-500 dark:text-gray-400 hidden md:block">
+      第 {{ $paginator.PageNumber }} 页，共 {{ $paginator.TotalPages }} 页
+      <span class="mx-2">·</span>
+      共 {{ len .Pages }} 篇文章
+    </div>
+      </nav>
+      {{ end }}
+      
+      {{ else }}
+      
+      <!-- 空状态 -->
+      <div class="text-center py-16 md:py-24">
+        <div class="text-6xl md:text-8xl mb-6">📝</div>
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">暂无文章</h2>
+        <p class="text-gray-600 dark:text-gray-400 text-lg mb-8">还没有发布任何文章，敬请期待！</p>
+        <a href="/" 
+           class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-semibold transition shadow-lg hover:shadow-xl inline-flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          返回首页
+        </a>
+      </div>
+      
+      {{ end }}
+    </div>
+    
+    <!-- 右侧：固定筛选面板 -->
+    <aside class="xl:w-80 xl:flex-shrink-0">
+      <div 
+        id="filter-panel"
+        class="xl:sticky xl:top-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden xl:block hidden"
+      >
+        <!-- 筛选器头部 -->
+        <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z"></path>
+            </svg>
+            筛选文章
+          </h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">找到你感兴趣的内容</p>
+        </div>
+        
+        <div class="p-6 space-y-6 max-h-[calc(100vh-12rem)] overflow-y-auto">
+          
+          <!-- 时间筛选 -->
+          <div class="space-y-3">
+            <h4 class="text-sm font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              发布时间
+            </h4>
+            
+            <!-- 预设时间范围 - 快捷按钮 -->
+            {{ $now := now }}
+            {{ $threeMonthsAgo := $now.AddDate 0 -3 0 }}
+            {{ $oneYearAgo := $now.AddDate -1 0 0 }}
+            {{ $threeYearsAgo := $now.AddDate -3 0 0 }}
+            {{ $fiveYearsAgo := $now.AddDate -5 0 0 }}
+            
+            {{ $recentThreeMonths := where .Pages "Date" ">" $threeMonthsAgo }}
+            {{ $recentOneYear := where .Pages "Date" ">" $oneYearAgo }}
+            {{ $recentThreeYears := where .Pages "Date" ">" $threeYearsAgo }}
+            {{ $recentFiveYears := where .Pages "Date" ">" $fiveYearsAgo }}
+            
+            <div class="grid grid-cols-1 gap-2">
+              <!-- 全部时间 -->
+              <button 
+                type="button" 
+                data-time-filter="all"
+                class="time-filter-btn active flex items-center justify-between w-full px-3 py-2.5 bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-700 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all duration-200 text-sm font-medium group"
+              >
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-infinity text-blue-600 dark:text-blue-400"></i>
+                  <span>全部时间</span>
+                </div>
+                <span class="px-2 py-1 bg-blue-600 text-white rounded-full text-xs font-semibold min-w-[2rem] text-center">{{ len .Pages }}</span>
+              </button>
+              
+              <!-- 最近3个月 -->
+              <button 
+                type="button" 
+                data-time-filter="3months"
+                class="time-filter-btn flex items-center justify-between w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 text-sm font-medium group"
+              >
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-calendar-week text-green-600 dark:text-green-400"></i>
+                  <span>最近3个月</span>
+                </div>
+                <span class="px-2 py-1 bg-gray-400 text-white rounded-full text-xs font-semibold min-w-[2rem] text-center">{{ len $recentThreeMonths }}</span>
+              </button>
+              
+              <!-- 最近1年 -->
+              <button 
+                type="button" 
+                data-time-filter="1year"
+                class="time-filter-btn flex items-center justify-between w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 text-sm font-medium group"
+              >
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-calendar-alt text-orange-600 dark:text-orange-400"></i>
+                  <span>最近1年</span>
+                </div>
+                <span class="px-2 py-1 bg-gray-400 text-white rounded-full text-xs font-semibold min-w-[2rem] text-center">{{ len $recentOneYear }}</span>
+              </button>
+              
+              <!-- 最近3年 -->
+              <button 
+                type="button" 
+                data-time-filter="3years"
+                class="time-filter-btn flex items-center justify-between w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 text-sm font-medium group"
+              >
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-history text-purple-600 dark:text-purple-400"></i>
+                  <span>最近3年</span>
+                </div>
+                <span class="px-2 py-1 bg-gray-400 text-white rounded-full text-xs font-semibold min-w-[2rem] text-center">{{ len $recentThreeYears }}</span>
+              </button>
+              
+              <!-- 最近5年 -->
+              <button 
+                type="button" 
+                data-time-filter="5years"
+                class="time-filter-btn flex items-center justify-between w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700/50 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 text-sm font-medium group"
+              >
+                <div class="flex items-center gap-2.5">
+                  <i class="fas fa-clock-rotate-left text-red-600 dark:text-red-400"></i>
+                  <span>最近5年</span>
+                </div>
+                <span class="px-2 py-1 bg-gray-400 text-white rounded-full text-xs font-semibold min-w-[2rem] text-center">{{ len $recentFiveYears }}</span>
+              </button>
+            </div>
+            
+            <!-- 年份选择 -->
+            <details class="group mt-4">
+              <summary class="text-sm font-medium text-blue-600 dark:text-blue-400 cursor-pointer hover:text-blue-700 dark:hover:text-blue-300 flex items-center gap-1 mb-2">
+                <svg class="w-4 h-4 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+                按年份筛选
+              </summary>
+              
+              <div class="mt-2 grid grid-cols-1 gap-1">
+                {{ $yearCounts := dict }}
+                {{ range .Pages }}
+                  {{ $year := .Date.Format "2006" }}
+                  {{ $count := index $yearCounts $year | default 0 }}
+                  {{ $yearCounts = merge $yearCounts (dict $year (add $count 1)) }}
+                {{ end }}
+                
+                {{ range $year, $count := $yearCounts }}
+                <button 
+                  type="button" 
+                  data-time-filter="year-{{ $year }}"
+                  class="year-filter-btn flex items-center justify-between w-full px-2.5 py-2 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 text-sm group"
+                >
+                  <div class="flex items-center gap-2">
+                    <i class="fas fa-calendar text-indigo-500 dark:text-indigo-400 text-xs"></i>
+                    <span>{{ $year }}年</span>
+                  </div>
+                  <span class="px-1.5 py-0.5 bg-gray-400 text-white rounded-full text-xs font-medium min-w-[1.5rem] text-center">{{ $count }}</span>
+                </button>
+                {{ end }}
+              </div>
+            </details>
+          </div>
+          
+          <!-- 分隔线 -->
+          <hr class="border-gray-200 dark:border-gray-700">
+          
+          <!-- 分类筛选 -->
+          {{ if .Site.Taxonomies.categories }}
+          <div class="space-y-3">
+            <h4 class="text-sm font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              </svg>
+              分类
+            </h4>
+            <div class="space-y-1">
+              {{ range .Site.Taxonomies.categories.ByCount }}
+              <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 px-2 py-1 rounded cursor-pointer transition-colors">
+                <input type="checkbox" name="category-filter" value="{{ .Page.Title }}" class="text-blue-600 focus:ring-blue-500 rounded">
+                <span>{{ .Page.Title }}</span>
+                <span class="ml-auto text-xs text-gray-500">({{ .Count }})</span>
+              </label>
+              {{ end }}
+            </div>
+          </div>
+          
+          <!-- 分隔线 -->
+          <hr class="border-gray-200 dark:border-gray-700">
+          {{ end }}
+          
+          <!-- 标签筛选 -->
+          {{ if .Site.Taxonomies.tags }}
+          <div class="space-y-3">
+            <h4 class="text-sm font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+              </svg>
+              标签
+            </h4>
+            
+            <!-- 搜索标签 -->
+            <div class="relative">
+              <input 
+                type="text" 
+                placeholder="搜索标签..."
+                class="w-full pl-8 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                id="tag-search"
+              >
+              <svg class="absolute left-2.5 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+            </div>
+            
+            <!-- 热门标签 -->
+            <div class="space-y-1" id="tags-container">
+              {{ range first 20 .Site.Taxonomies.tags.ByCount }}
+              <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 px-2 py-1 rounded cursor-pointer transition-colors tag-item" data-tag="{{ .Page.Title | lower }}">
+                <input type="checkbox" name="tag-filter" value="{{ .Page.Title }}" class="text-blue-600 focus:ring-blue-500 rounded">
+                <span class="flex-1">{{ .Page.Title }}</span>
+                <span class="text-xs text-gray-500">({{ .Count }})</span>
+              </label>
+              {{ end }}
+              
+              {{ if gt (len .Site.Taxonomies.tags) 20 }}
+              <button 
+                id="show-more-tags"
+                class="w-full text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 py-2 text-center"
+              >
+                显示更多标签 ({{ sub (len .Site.Taxonomies.tags) 20 }})
+              </button>
+              {{ end }}
+            </div>
+          </div>
+          
+          <!-- 分隔线 -->
+          <hr class="border-gray-200 dark:border-gray-700">
+          {{ end }}
+          
+          <!-- 排序选项 -->
+          <div class="space-y-3">
+            <h4 class="text-sm font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
+              </svg>
+              排序方式
+            </h4>
+            <div class="space-y-1">
+              <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 px-2 py-1 rounded cursor-pointer transition-colors">
+                <input type="radio" name="sort-filter" value="date-desc" class="text-blue-600 focus:ring-blue-500" checked>
+                <span>最新发布</span>
+              </label>
+              <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 px-2 py-1 rounded cursor-pointer transition-colors">
+                <input type="radio" name="sort-filter" value="date-asc" class="text-blue-600 focus:ring-blue-500">
+                <span>最早发布</span>
+              </label>
+              <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 px-2 py-1 rounded cursor-pointer transition-colors">
+                <input type="radio" name="sort-filter" value="title" class="text-blue-600 focus:ring-blue-500">
+                <span>标题排序</span>
+              </label>
+              <label class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 px-2 py-1 rounded cursor-pointer transition-colors">
+                <input type="radio" name="sort-filter" value="reading-time" class="text-blue-600 focus:ring-blue-500">
+                <span>阅读时间</span>
+              </label>
+            </div>
+          </div>
+          
+          <!-- 操作按钮 -->
+          <div class="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
+            <button 
+              id="apply-filters"
+              class="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition shadow-md hover:shadow-lg"
+            >
+              应用筛选
+            </button>
+            <button 
+              id="reset-filters"
+              class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition"
+            >
+              重置筛选
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- 筛选器 JavaScript -->
+<script>
+</script>
+
+{{ end }}

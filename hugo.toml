@@ -86,7 +86,7 @@ title = 'My New Hugo Site'
     type = "particles"
     
     # 仅在首页显示 (true) 或所有页面显示 (false)
-    homeOnly = true
+    homeOnly = false
     
     # 在移动端禁用动画以提升性能
     disableOnMobile = true

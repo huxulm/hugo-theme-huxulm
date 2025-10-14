@@ -1,6 +1,12 @@
 {
     "name": "Hugo Development Container",
-    "image": "huxulm69/devimgs:hugo-debian-latest",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".",
+         "options": [
+            "--network=host"
+         ]
+    },
     "runArgs": [
         "--privileged",
         "--network=host"

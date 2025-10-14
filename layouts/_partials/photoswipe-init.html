@@ -1,0 +1,56 @@
+<!-- CSS (CDN 示例) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe/dist/photoswipe.css">
+
+<!-- JS (CDN 示例) -->
+<script src="https://cdn.jsdelivr.net/npm/photoswipe/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe/dist/photoswipe-lightbox.esm.min.js" type="module"></script>
+
+<script type="module">
+  import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe/dist/photoswipe-lightbox.esm.min.js';
+  // 如果你不能用模块加载器，也可以使用 UMD 版本（上面的 photoswipe.min.js），然后用全局 PhotoSwipeLightbox（视 CDN 文件而定）
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: 'article', // 这里我们把每张 <a> 做为独立项：'.pswp-item' 也可以改为包含父容器
+    children: 'a',
+    pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe/dist/photoswipe.esm.min.js')
+  });
+
+  lightbox.init();
+</script>
+
+<style>
+    .photoswipe-item {
+        text-align: center;
+    }
+    .photoswipe-item a {
+        display: inline-block;
+        margin: none!important;
+        border: 0px solid transparent;
+        transition: none!important;
+        animation: none!important;
+    }
+    .photoswipe-item a::before{
+        content: none!important;
+    }
+    .photoswipe-item a:hover {
+        border-color: #01173a;
+    }
+    .photoswipe-item img {
+        display: block;
+        margin: 0!important;
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.25rem!important;
+        transition: none!important;
+        animation: none!important;
+    }
+    .photoswipe-item figcaption {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+    }
+    .dark .photoswipe-item a:hover {
+        border-color: #fefefe;
+        border-width: 0.2px;
+    }
+</style>

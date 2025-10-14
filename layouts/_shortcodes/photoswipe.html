@@ -1,0 +1,24 @@
+{{- with .Page.Resources.Get (.Get "src") }}
+  {{- $original := . }}
+  {{- $originalWidth := .Width }}
+  {{- $originalHeight := .Height }}
+  
+  {{- $targetWidth := $.Get "width" | default 800 }}
+  {{- $processed := .Process (printf "resize %dx webp" $targetWidth) }}
+  
+  <figure class="photoswipe-item">
+    <a href="{{ $original.Permalink }}" 
+       data-pswp-width="{{ $originalWidth }}" 
+       data-pswp-height="{{ $originalHeight }}"
+       data-pswp-src="{{ $original.Permalink }}">
+      <img src="{{ $processed.Permalink }}" 
+           width="{{ $processed.Width }}" 
+           height="{{ $processed.Height }}"
+           alt="{{ $.Get "alt" | default "图片" }}"
+           loading="lazy">
+    </a>
+    {{- if $.Get "caption" }}
+    <figcaption class="mx-auto text-center">{{ $.Get "caption" }}</figcaption>
+    {{- end }}
+  </figure>
+{{- end -}}
