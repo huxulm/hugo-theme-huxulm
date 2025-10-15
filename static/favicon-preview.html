@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon 测试页面</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f8fafc;
+            color: #1a202c;
+        }
+        
+        .favicon-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .favicon-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .favicon-display {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        
+        .favicon-display img {
+            max-width: 48px;
+            max-height: 48px;
+        }
+        
+        .favicon-small {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .favicon-small img {
+            max-width: 24px;
+            max-height: 24px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        .browser-tab-sim {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e0;
+            border-radius: 0.25rem 0.25rem 0 0;
+            padding: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Favicon 设计预览</h1>
+    <p>这是 Hugo Theme Huxulm 的新 favicon 设计，使用了 "&lt;/&gt;" 代码标识符。</p>
+    
+    <div class="favicon-preview">
+        <div class="favicon-item">
+            <div class="favicon-display">
+                <img src="favicon.svg" alt="标准版本">
+            </div>
+            <h3>标准版本</h3>
+            <p>蓝紫渐变，适合浅色背景</p>
+            <div class="browser-tab-sim">
+                <img src="favicon.svg" style="width: 16px; height: 16px;">
+                Hugo Theme | 标签标题
+            </div>
+        </div>
+        
+        <div class="favicon-item">
+            <div class="favicon-display">
+                <img src="favicon-bright.svg" alt="高对比度版本">
+            </div>
+            <h3>高对比度版本</h3>
+            <p>彩虹渐变带发光效果</p>
+            <div class="browser-tab-sim">
+                <img src="favicon-bright.svg" style="width: 16px; height: 16px;">
+                Hugo Theme | 标签标题
+            </div>
+        </div>
+        
+        <div class="favicon-item">
+            <div class="favicon-display favicon-small">
+                <img src="favicon-16.svg" alt="小尺寸版本">
+            </div>
+            <h3>小尺寸版本</h3>
+            <p>简化设计，16x16 像素</p>
+            <div class="browser-tab-sim">
+                <img src="favicon-16.svg" style="width: 16px; height: 16px;">
+                Hugo Theme | 标签标题
+            </div>
+        </div>
+    </div>
+    
+    <h2>✨ 设计特点</h2>
+    <ul>
+        <li><strong>现代 SVG 格式</strong>：矢量图形，任意缩放不失真</li>
+        <li><strong>显目的渐变色</strong>：使用蓝紫色系，醒目且专业</li>
+        <li><strong>代码主题</strong>：&lt;/&gt; 符号代表前端开发和编程</li>
+        <li><strong>多版本支持</strong>：标准、高对比度、小尺寸版本</li>
+        <li><strong>完美兼容性</strong>：支持所有现代浏览器和设备</li>
+    </ul>
+    
+    <h2>🔧 技术规格</h2>
+    <ul>
+        <li><strong>格式</strong>：SVG (Scalable Vector Graphics)</li>
+        <li><strong>尺寸</strong>：32x32, 16x16 像素优化</li>
+        <li><strong>颜色</strong>：渐变色 (#667eea → #764ba2 → #f093fb)</li>
+        <li><strong>兼容性</strong>：Chrome, Firefox, Safari, Edge</li>
+        <li><strong>PWA支持</strong>：包含 Web App Manifest</li>
+    </ul>
+</body>
+</html>

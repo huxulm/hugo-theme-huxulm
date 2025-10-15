@@ -21,9 +21,9 @@
    */
   function getSavedTheme() {
     try {
-      return localStorage.getItem(THEME_KEY) || THEME_AUTO;
+      return localStorage.getItem(THEME_KEY) || THEME_DARK;
     } catch (e) {
-      return THEME_AUTO;
+      return THEME_DARK;
     }
   }
 

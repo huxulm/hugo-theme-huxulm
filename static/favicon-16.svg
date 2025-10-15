@@ -1,0 +1,35 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- 简化版本，适合小图标 -->
+  <defs>
+    <linearGradient id="miniGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff4757;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3742fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2ed573;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景圆形 -->
+  <circle cx="8" cy="8" r="7.5" fill="#1a1a1a" stroke="url(#miniGradient)" stroke-width="1"/>
+  
+  <!-- 左括号 "<" -->
+  <path d="M6 5 L3.5 8 L6 11" 
+        fill="none" 
+        stroke="url(#miniGradient)" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- 右括号 ">" -->
+  <path d="M10 5 L12.5 8 L10 11" 
+        fill="none" 
+        stroke="url(#miniGradient)" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- 中间的斜杠 "/" -->
+  <line x1="9.5" y1="5" x2="6.5" y2="11" 
+        stroke="url(#miniGradient)" 
+        stroke-width="2" 
+        stroke-linecap="round"/>
+</svg>

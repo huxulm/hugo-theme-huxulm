@@ -1,9 +1,9 @@
 ---
 title: "天文算法"
 date: 2024-01-23T16:01:08+08:00
-tags:
-- 天文算法
-featured_image: "posts/astro/astronomical-algorithms.jpg"
+tags: ["天文算法", "天文"]
+params:
+  images: ['./cover.jpg']
 description: ""
 ---
 ## 目录

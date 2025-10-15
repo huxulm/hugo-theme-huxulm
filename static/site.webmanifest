@@ -1,0 +1,28 @@
+{
+  "name": "Hugo Theme Huxulm",
+  "short_name": "Huxulm",
+  "description": "Modern Hugo theme with beautiful design",
+  "icons": [
+    {
+      "src": "favicon-16.svg",
+      "sizes": "16x16",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.svg", 
+      "sizes": "32x32",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon-bright.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#667eea",
+  "background_color": "#1a1a1a",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/"
+}

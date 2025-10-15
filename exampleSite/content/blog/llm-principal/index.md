@@ -3,15 +3,13 @@ title = '大语言模型的工作原理：从 Transformer 到 ChatGPT'
 date = '2025-10-12T13:21:39Z'
 draft = false
 description = '深入探讨大语言模型的核心技术，了解 Transformer 架构、注意力机制以及 GPT 系列模型的演进历程'
-featured_image = './llm-architecture.svg'
 categories = ['人工智能', '机器学习']
 tags = ['LLM', 'Transformer', 'GPT', 'ChatGPT', '深度学习', 'NLP']
 
 [params]
   images = [
     './cover.png',
-    './llm-architecture.svg',
-    './gpt-evolution.svg'
+    './gpt-evolution.png'
   ]
 +++
 

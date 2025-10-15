@@ -13,8 +13,9 @@ title = 'Huxulm 的博客'
     notAlternative = true
 
 [params]
-  description = "分享技术见解、编程经验与生活感悟"
-  author = "Hugo Theme Huxulm"
+  description = "分享技术见解、编程经验"
+  author = "Huxulm"
+  favicon = "favicon.svg"
   
   # 首页最新博文数量（可配置）
   recentPostsCount = 3

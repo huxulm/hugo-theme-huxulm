@@ -1,0 +1,20 @@
+<!-- 现代 SVG favicon (推荐) -->
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
+
+<!-- 备用 ICO favicon (兼容性) -->
+<link rel="shortcut icon" href="{{ "favicon.ico" | relURL }}" type="image/x-icon">
+
+<!-- Apple Touch Icon (iOS 设备) -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ "apple-touch-icon.png" | relURL }}">
+
+<!-- Android/Chrome 各种尺寸 -->
+<link rel="icon" type="image/png" sizes="32x32" href="{{ "favicon-32x32.png" | relURL }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ "favicon-16x16.png" | relURL }}">
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
+
+<!-- 自定义 favicon 支持 -->
+{{ if .Site.Params.favicon }}
+<link rel="shortcut icon" href="{{ relURL ($.Site.Params.favicon) }}" type="image/x-icon" />
+{{ end }}

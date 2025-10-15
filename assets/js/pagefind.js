@@ -155,6 +155,10 @@ class PagefindSearch {
 
   handleKeydown(e) {
     switch (e.key) {
+      case 'Tab':
+        e.preventDefault();
+        this.navigateResults(1);
+        break;
       case 'ArrowDown':
         e.preventDefault();
         this.navigateResults(1);

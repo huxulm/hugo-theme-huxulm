@@ -4,3 +4,6 @@
 {{ partial "head/css.html" . }}
 {{ partial "head/js.html" . }}
 {{ partial "head/fonts.html" . }}
+{{ block "favicon" . }}
+    {{ partialCached "site-favico.html" . }}
+{{ end }}
