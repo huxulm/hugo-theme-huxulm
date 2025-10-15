@@ -117,7 +117,7 @@
 
         <!-- Description -->
         {{ with .Description }}
-        <div class="mt-6 p-4 md:p-5 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600 dark:border-blue-400 rounded-r-lg">
+        <div class="mt-6 p-4 md:p-5 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-600 dark:border-blue-400 rounded-l-lg rounded-r-lg">
           <p class="text-gray-700 dark:text-gray-300 text-base md:text-lg leading-relaxed italic">
             {{ . }}
           </p>
@@ -161,18 +161,6 @@
             分享这篇文章
           </h3>
           <div class="flex flex-wrap gap-3">
-            <!-- Twitter/X -->
-            <a 
-              href="https://twitter.com/intent/tweet?text={{ .Title | urlize }}&url={{ .Permalink }}" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-lg inline-flex items-center gap-2 transition-colors"
-            >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-              Twitter
-            </a>
             
             <!-- WeChat (Copy Link) -->
             <button 
@@ -229,7 +217,7 @@
         <!-- Back to List -->
         <div class="mt-8 text-center">
           <a 
-            href="/posts" 
+            href="/blog" 
             class="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg font-semibold transition-colors"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

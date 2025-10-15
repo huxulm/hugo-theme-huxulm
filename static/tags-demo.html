@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签页面设计预览</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 标签尺寸样式 */
+        .tag-small {
+            font-size: 0.875rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .tag-medium {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .tag-large {
+            font-size: 1.125rem;
+            padding: 0.75rem 1.25rem;
+        }
+
+        /* 入场动画 */
+        .tag-item {
+            animation: tagFadeIn 0.8s ease-out forwards;
+            animation-delay: var(--tag-delay);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes tagFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 悬停动画 */
+        .tag-item:hover {
+            animation: tagBounce 0.6s ease-in-out;
+        }
+
+        @keyframes tagBounce {
+            0%, 100% { transform: scale(1.1) rotate(1deg); }
+            50% { transform: scale(1.15) rotate(-1deg); }
+        }
+
+        /* 搜索高亮 */
+        .highlight-match {
+            background: linear-gradient(120deg, #fbbf24 0%, #f59e0b 100%);
+            color: #92400e;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+        }
+
+        .dark .highlight-match {
+            background: linear-gradient(120deg, #f59e0b 0%, #d97706 100%);
+            color: #fbbf24;
+        }
+
+        /* 渐变背景 */
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <!-- 页面头部 -->
+    <div class="min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            
+            <!-- 页面标题区域 -->
+            <div class="text-center mb-16">
+                <div class="relative inline-block">
+                    <!-- 装饰性背景 -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 animate-pulse"></div>
+                    <h1 class="relative bg-white px-8 py-4 rounded-lg text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600">
+                        <svg class="inline-block w-12 h-12 md:w-16 md:h-16 mr-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        标签云
+                    </h1>
+                </div>
+                
+                <p class="mt-6 text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                    探索文章标签，发现感兴趣的内容。点击标签查看相关文章，使用搜索快速定位。
+                </p>
+                
+                <!-- 统计信息 -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
+                    <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
+                        <div class="text-3xl font-bold text-blue-600">12</div>
+                        <div class="text-gray-600 mt-1">总标签数</div>
+                    </div>
+                    <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
+                        <div class="text-3xl font-bold text-purple-600">48</div>
+                        <div class="text-gray-600 mt-1">标签文章数</div>
+                    </div>
+                    <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50">
+                        <div class="text-3xl font-bold text-indigo-600">8</div>
+                        <div class="text-gray-600 mt-1">最热标签数</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索和过滤区域 -->
+            <div class="mb-12">
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <input 
+                            type="search" 
+                            id="tag-search"
+                            class="block w-full pl-12 pr-12 py-4 text-lg bg-white/80 backdrop-blur-sm border-2 border-gray-200 rounded-2xl text-gray-900 placeholder-gray-500 focus:ring-4 focus:ring-blue-500/25 focus:border-blue-500 transition-all duration-300 shadow-lg"
+                            placeholder="搜索标签..."
+                            autocomplete="off"
+                        >
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                            <button 
+                                id="clear-search" 
+                                class="opacity-0 transition-opacity text-gray-400 hover:text-gray-600"
+                            >
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 搜索结果计数 -->
+                    <div id="search-stats" class="mt-4 text-center text-gray-600 opacity-0 transition-opacity">
+                        <!-- 搜索统计 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 排序选项 -->
+            <div class="mb-12">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button 
+                        data-sort="name" 
+                        class="sort-btn active px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-blue-500 text-white shadow-lg hover:shadow-xl hover:scale-105"
+                    >
+                        <svg class="inline-block w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4"></path>
+                        </svg>
+                        按名称排序
+                    </button>
+                    <button 
+                        data-sort="count" 
+                        class="sort-btn px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-white/80 backdrop-blur-sm text-gray-700 border border-gray-200 hover:bg-blue-50 hover:border-blue-300 hover:scale-105"
+                    >
+                        <svg class="inline-block w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                        </svg>
+                        按热度排序
+                    </button>
+                    <button 
+                        data-sort="recent" 
+                        class="sort-btn px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-white/80 backdrop-blur-sm text-gray-700 border border-gray-200 hover:bg-blue-50 hover:border-blue-300 hover:scale-105"
+                    >
+                        <svg class="inline-block w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        按最新使用
+                    </button>
+                </div>
+            </div>
+
+            <!-- 标签云展示区域 -->
+            <div class="mb-16">
+                <div id="tags-container" class="flex flex-wrap justify-center gap-4">
+                    <!-- 演示标签 -->
+                    <a href="#" class="tag-item tag-large group relative inline-flex items-center rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-1 hover:shadow-xl"
+                       data-tag="Hugo" data-count="8" data-size="large" style="--tag-delay: 0.1s;">
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-full border border-indigo-200 group-hover:border-indigo-300 transition-colors"></div>
+                        <svg class="relative w-4 h-4 mr-2 text-indigo-500 group-hover:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <span class="relative text-gray-700 group-hover:text-indigo-700 transition-colors">Hugo</span>
+                        <span class="relative ml-2 px-2 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full group-hover:bg-indigo-200 transition-colors">8</span>
+                    </a>
+
+                    <a href="#" class="tag-item tag-medium group relative inline-flex items-center rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-1 hover:shadow-xl"
+                       data-tag="JavaScript" data-count="5" data-size="medium" style="--tag-delay: 0.2s;">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-full border border-purple-200 group-hover:border-purple-300 transition-colors"></div>
+                        <svg class="relative w-4 h-4 mr-2 text-purple-500 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <span class="relative text-gray-700 group-hover:text-purple-700 transition-colors">JavaScript</span>
+                        <span class="relative ml-2 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded-full group-hover:bg-purple-200 transition-colors">5</span>
+                    </a>
+
+                    <a href="#" class="tag-item tag-large group relative inline-flex items-center rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-1 hover:shadow-xl"
+                       data-tag="前端开发" data-count="7" data-size="large" style="--tag-delay: 0.3s;">
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-400 to-indigo-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-full border border-indigo-200 group-hover:border-indigo-300 transition-colors"></div>
+                        <svg class="relative w-4 h-4 mr-2 text-indigo-500 group-hover:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <span class="relative text-gray-700 group-hover:text-indigo-700 transition-colors">前端开发</span>
+                        <span class="relative ml-2 px-2 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full group-hover:bg-indigo-200 transition-colors">7</span>
+                    </a>
+
+                    <a href="#" class="tag-item tag-small group relative inline-flex items-center rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-1 hover:shadow-xl"
+                       data-tag="CSS" data-count="3" data-size="small" style="--tag-delay: 0.4s;">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-full border border-blue-200 group-hover:border-blue-300 transition-colors"></div>
+                        <svg class="relative w-4 h-4 mr-2 text-blue-500 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <span class="relative text-gray-700 group-hover:text-blue-700 transition-colors">CSS</span>
+                        <span class="relative ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full group-hover:bg-blue-200 transition-colors">3</span>
+                    </a>
+
+                    <a href="#" class="tag-item tag-medium group relative inline-flex items-center rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-1 hover:shadow-xl"
+                       data-tag="React" data-count="4" data-size="medium" style="--tag-delay: 0.5s;">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-full border border-purple-200 group-hover:border-purple-300 transition-colors"></div>
+                        <svg class="relative w-4 h-4 mr-2 text-purple-500 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <span class="relative text-gray-700 group-hover:text-purple-700 transition-colors">React</span>
+                        <span class="relative ml-2 px-2 py-1 text-xs bg-purple-100 text-purple-700 rounded-full group-hover:bg-purple-200 transition-colors">4</span>
+                    </a>
+
+                    <a href="#" class="tag-item tag-small group relative inline-flex items-center rounded-full transition-all duration-300 transform hover:scale-110 hover:rotate-1 hover:shadow-xl"
+                       data-tag="Tailwind" data-count="2" data-size="small" style="--tag-delay: 0.6s;">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-full border border-blue-200 group-hover:border-blue-300 transition-colors"></div>
+                        <svg class="relative w-4 h-4 mr-2 text-blue-500 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                        </svg>
+                        <span class="relative text-gray-700 group-hover:text-blue-700 transition-colors">Tailwind</span>
+                        <span class="relative ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full group-hover:bg-blue-200 transition-colors">2</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 热门标签推荐 -->
+            <div class="mt-16">
+                <h2 class="text-3xl font-bold text-center mb-8 text-gray-900">
+                    🔥 热门标签
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <div class="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                        <a href="#" class="block">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                            Hugo
+                                        </h3>
+                                        <p class="text-sm text-gray-600">8 篇文章</p>
+                                    </div>
+                                </div>
+                                <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                            
+                            <!-- 文章预览 -->
+                            <div class="space-y-2">
+                                <div class="text-sm text-gray-600 truncate">• Hugo 主题开发指南</div>
+                                <div class="text-sm text-gray-600 truncate">• 静态网站生成器对比</div>
+                                <div class="text-sm text-gray-600 truncate">• Hugo 配置最佳实践</div>
+                                <div class="text-sm text-blue-600">还有 5 篇文章...</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- 更多热门标签卡片... -->
+                    <div class="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-200/50 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                        <a href="#" class="block">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+                                            前端开发
+                                        </h3>
+                                        <p class="text-sm text-gray-600">7 篇文章</p>
+                                    </div>
+                                </div>
+                                <svg class="w-5 h-5 text-gray-400 group-hover:text-purple-500 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <div class="text-sm text-gray-600 truncate">• 现代前端开发工具链</div>
+                                <div class="text-sm text-gray-600 truncate">• CSS 动画最佳实践</div>
+                                <div class="text-sm text-gray-600 truncate">• JavaScript 性能优化</div>
+                                <div class="text-sm text-purple-600">还有 4 篇文章...</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // 简单的搜索演示功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('tag-search');
+            const clearBtn = document.getElementById('clear-search');
+            const sortBtns = document.querySelectorAll('.sort-btn');
+            
+            let allTags = Array.from(document.querySelectorAll('.tag-item'));
+            
+            // 搜索功能演示
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                
+                allTags.forEach(tag => {
+                    const tagName = tag.dataset.tag.toLowerCase();
+                    const isVisible = !query || tagName.includes(query);
+                    tag.style.display = isVisible ? 'inline-flex' : 'none';
+                    
+                    // 高亮匹配文本
+                    if (query && isVisible) {
+                        const span = tag.querySelector('span:first-of-type');
+                        const originalText = tag.dataset.tag;
+                        const highlightedText = originalText.replace(
+                            new RegExp(`(${query})`, 'gi'),
+                            '<span class="highlight-match">$1</span>'
+                        );
+                        span.innerHTML = highlightedText;
+                    } else {
+                        const span = tag.querySelector('span:first-of-type');
+                        span.innerHTML = tag.dataset.tag;
+                    }
+                });
+                
+                // 显示/隐藏清除按钮
+                clearBtn.style.opacity = query ? '1' : '0';
+            });
+            
+            // 清除搜索
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
+            });
+            
+            // 排序功能演示
+            sortBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 更新按钮状态
+                    sortBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-blue-500', 'text-white', 'shadow-lg');
+                        b.classList.add('bg-white/80', 'text-gray-700', 'border', 'border-gray-200');
+                    });
+                    
+                    btn.classList.add('active', 'bg-blue-500', 'text-white', 'shadow-lg');
+                    btn.classList.remove('bg-white/80', 'text-gray-700', 'border', 'border-gray-200');
+                    
+                    // 这里可以添加实际的排序逻辑
+                    console.log('排序方式:', btn.dataset.sort);
+                });
+            });
+            
+            console.log('标签页面演示已加载');
+        });
+    </script>
+</body>
+</html>

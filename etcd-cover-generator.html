@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETCD 备份与恢复 - 封面图片</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .cover-container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow: hidden;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 背景装饰 */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.3) 0%, transparent 20%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.2) 0%, transparent 20%),
+                radial-gradient(circle at 40% 80%, rgba(255,255,255,0.15) 0%, transparent 20%);
+        }
+        
+        /* 主要内容区域 */
+        .content {
+            text-align: center;
+            z-index: 10;
+            color: white;
+            max-width: 900px;
+            padding: 0 40px;
+        }
+        
+        /* Kubernetes 图标 */
+        .k8s-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .k8s-icon svg {
+            width: 70px;
+            height: 70px;
+            fill: white;
+        }
+        
+        /* 标题 */
+        .title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        /* 功能标签 */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .feature-tag {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        
+        /* 装饰性元素 */
+        .decorative-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+        
+        .floating-box {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .box1 { width: 60px; height: 60px; top: 10%; left: 5%; transform: rotate(15deg); }
+        .box2 { width: 40px; height: 40px; top: 15%; right: 8%; transform: rotate(-10deg); }
+        .box3 { width: 50px; height: 50px; bottom: 20%; left: 8%; transform: rotate(25deg); }
+        .box4 { width: 35px; height: 35px; bottom: 15%; right: 5%; transform: rotate(-20deg); }
+        
+        /* 数据流动画效果 */
+        .data-flow {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+            animation: dataFlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes dataFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .cover-container {
+                width: 800px;
+                height: 420px;
+            }
+            
+            .title {
+                font-size: 36px;
+            }
+            
+            .subtitle {
+                font-size: 18px;
+            }
+            
+            .features {
+                gap: 15px;
+            }
+            
+            .feature-tag {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cover-container">
+        <!-- 背景装饰 -->
+        <div class="bg-pattern"></div>
+        <div class="data-flow"></div>
+        
+        <!-- 装饰性浮动元素 -->
+        <div class="decorative-elements">
+            <div class="floating-box box1"></div>
+            <div class="floating-box box2"></div>
+            <div class="floating-box box3"></div>
+            <div class="floating-box box4"></div>
+        </div>
+        
+        <!-- 主要内容 -->
+        <div class="content">
+            <!-- Kubernetes 图标 -->
+            <div class="k8s-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12,2C13.1,2 14,2.9 14,4C14,5.1 13.1,6 12,6C10.9,6 10,5.1 10,4C10,2.9 10.9,2 12,2M21,9V7L15,6.5V9H21M9,8V6.5L3,7V9H9M16,12C16,8.69 14.5,5.8 12,4.34C9.5,5.8 8,8.69 8,12V16L12,22L16,16V12Z"/>
+                </svg>
+            </div>
+            
+            <h1 class="title">ETCD 数据备份与恢复</h1>
+            <p class="subtitle">Kubernetes 集群数据保护最佳实践</p>
+            
+            <div class="features">
+                <div class="feature-tag">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V14H16V16H8V14H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V14H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z"/>
+                    </svg>
+                    数据备份
+                </div>
+                <div class="feature-tag">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <path d="M12,3A4,4 0 0,1 16,7A4,4 0 0,1 12,11A4,4 0 0,1 8,7A4,4 0 0,1 12,3M12,14.2C13.5,13.8 15,14.1 16.1,15.2C17.2,16.3 17.5,17.8 17.1,19.3L12,22L6.9,19.3C6.5,17.8 6.8,16.3 7.9,15.2C9,14.1 10.5,13.8 12,14.2Z"/>
+                    </svg>
+                    快速恢复
+                </div>
+                <div class="feature-tag">
+                    <svg class="feature-icon" viewBox="0 0 24 24">
+                        <path d="M17,7H22V17H17V19A1,1 0 0,0 18,20H20V22H17.5C16.95,22 16,21.55 16,21C16,21.55 15.05,22 14.5,22H12V20H14A1,1 0 0,0 15,19V5A1,1 0 0,0 14,4H12V2H14.5C15.05,2 16,2.45 16,3C16,2.45 16.95,2 17.5,2H20V4H18A1,1 0 0,0 17,5V7M2,7H7V17H2V7M4,9V15H5V9H4M8,9V15H9V9H8Z"/>
+                    </svg>
+                    容器化部署
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

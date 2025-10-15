@@ -7,6 +7,13 @@
             "--network=host"
          ]
     },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bradlc.vscode-tailwindcss"
+            ]
+        }
+    },
     "runArgs": [
         "--privileged",
         "--network=host"

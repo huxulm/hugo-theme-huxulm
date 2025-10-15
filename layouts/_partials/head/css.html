@@ -13,7 +13,7 @@
 {{ end }}
 
 {{- /* Post-specific CSS (仅在文章页面加载) */ -}}
-{{ if eq .Type "posts" }}
+{{ if eq .Type "blog" }}
   {{ with resources.Get "css/post.css" }}
     {{ $opts := dict "minify" (not hugo.IsDevelopment) }}
     {{ with . | css.TailwindCSS $opts }}

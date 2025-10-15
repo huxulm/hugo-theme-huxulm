@@ -91,6 +91,98 @@ body {
 }
 
 /* ================================================
+   搜索模态框样式
+   ================================================ */
+
+/* 搜索模态框入场动画 */
+#search-modal {
+  animation: modal-fade-in 0.2s ease-out;
+}
+
+#search-modal.hidden {
+  animation: modal-fade-out 0.15s ease-in;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes modal-fade-out {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* 搜索结果高亮 */
+mark {
+  background-color: rgb(254 240 138); /* yellow-200 */
+  color: rgb(17 24 39); /* gray-900 */
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+}
+
+.dark mark {
+  background-color: rgb(133 77 14 / 0.5); /* yellow-600/50 */
+  color: rgb(254 240 138); /* yellow-200 */
+}
+
+/* 搜索结果项悬停效果 */
+.search-result-item {
+  transition: all 0.2s ease;
+}
+
+.search-result-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+.dark .search-result-item:hover {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+}
+
+/* 文本截断样式 */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* 键盘快捷键样式 */
+kbd {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  min-width: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================================================
    打印样式
    ================================================ */
 
@@ -101,10 +193,11 @@ body {
     color: black !important;
   }
   
-  /* 隐藏导航和页脚 */
+  /* 隐藏导航、页脚和搜索模态框 */
   header,
   footer,
-  nav {
+  nav,
+  #search-modal {
     display: none !important;
   }
 }
