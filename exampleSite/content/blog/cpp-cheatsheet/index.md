@@ -3,7 +3,6 @@ title: "C++ Cheatsheet"
 date: 2024-01-11T13:00:59+08:00
 tags: ["C++"]
 toc: true
-featured_image: ""
 description: "C++ 基本语法"
 params:
   description: "C++ 基本语法"

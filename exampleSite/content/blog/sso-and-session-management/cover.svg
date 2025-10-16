@@ -1,0 +1,56 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义样式和渐变 -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0c1222;stop-opacity:1" />
+    </linearGradient>    
+    <!-- 5种常用背景渐变 -->
+    <!-- 背景渐变1 亮色基础 -->
+    <linearGradient id="bgGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#eee800;stop-opacity:1" />
+    </linearGradient>
+    <!-- 背景渐变2 暗色基础 -->
+    <linearGradient id="bgGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0c1222;stop-opacity:1" />
+    </linearGradient>
+    <!-- 背景渐变3 紫色系 -->
+    <linearGradient id="bgGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7e5bef;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+    </linearGradient>
+    <!-- 背景渐变4 蓝色系 -->
+    <linearGradient id="bgGradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <!-- 背景渐变5 绿色系 -->
+    <linearGradient id="bgGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- 文本渐变 -->
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="400" height="200" fill="url(#bgGradient)" />
+
+  <!-- 标题 -->
+  <text x="200" y="70" text-anchor="middle" font-family="Noto Sans CJK SC, Arial, sans-serif"
+    font-size="48" font-weight="bold" fill="url(#textGradient)">
+    单点登录 &amp;
+  </text>
+  <text x="200" y="150" text-anchor="middle" font-family="Noto Sans CJK SC, Arial, sans-serif"
+    font-size="48" font-weight="bold" fill="url(#textGradient)">
+    会话管理
+  </text>
+</svg>

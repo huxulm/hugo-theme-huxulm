@@ -1,0 +1,162 @@
+<svg width="900" height="600" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义样式和渐变 -->
+  <defs>
+    <!-- 背景渐变 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 时间轴渐变 -->
+    <linearGradient id="timeAxisGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.3" />
+    </linearGradient>
+    
+    <!-- 公式背景 -->
+    <linearGradient id="formulaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e7ff;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 阴影滤镜 -->
+    <filter id="dropshadow" x="0" y="0" width="120%" height="120%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.2)"/>
+    </filter>
+    
+    <!-- 箭头标记 -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#374151" />
+    </marker>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="900" height="600" fill="url(#bgGradient)"/>
+  
+  <!-- 标题 -->
+  <text x="450" y="40" text-anchor="middle" font-family="Noto Sans CJK SC" 
+        font-size="24" font-weight="bold" fill="#1f2937">
+    天文时间系统关系图
+  </text>
+  <text x="450" y="65" text-anchor="middle" font-family="Noto Sans CJK SC" 
+        font-size="14" fill="#6b7280">
+    Astronomical Time Systems Relationship
+  </text>
+  
+  <!-- 主要公式框 -->
+  <rect x="100" y="90" width="700" height="80" rx="10" fill="url(#formulaGradient)" 
+        stroke="#3b82f6" stroke-width="2" filter="url(#dropshadow)"/>
+  
+  <text x="450" y="120" text-anchor="middle" font-family="Noto Sans CJK SC" 
+        font-size="18" font-weight="bold" fill="#1e40af">
+    TT = TAI + 32.184s
+  </text>
+  <text x="450" y="145" text-anchor="middle" font-family="Noto Sans CJK SC" 
+        font-size="16" font-weight="bold" fill="#7c3aed">
+    UT1 - UTC = (TAI - UTC) - (TT - UT1) + 32.184s
+  </text>
+  
+  <!-- 时间轴基准线 -->
+  <line x1="150" y1="250" x2="750" y2="250" stroke="#374151" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="760" y="255" font-family="Noto Sans CJK SC" font-size="12" fill="#374151">时间</text>
+  
+  <!-- UTC 时间轴 -->
+  <g id="utc-axis">
+    <rect x="150" y="280" width="500" height="20" fill="#ef4444" fill-opacity="0.3" stroke="#ef4444" stroke-width="2" rx="3"/>
+    <text x="80" y="295" font-family="Noto Sans CJK SC" font-size="14" font-weight="bold" fill="#dc2626">UTC</text>
+    <text x="670" y="295" font-family="Noto Sans CJK SC" font-size="12" fill="#6b7280">协调世界时</text>
+  </g>
+  
+  <!-- TAI 时间轴 -->
+  <g id="tai-axis">
+    <rect x="150" y="320" width="537" height="20" fill="#3b82f6" fill-opacity="0.3" stroke="#3b82f6" stroke-width="2" rx="3"/>
+    <text x="80" y="335" font-family="Noto Sans CJK SC" font-size="14" font-weight="bold" fill="#2563eb">TAI</text>
+    <text x="700" y="335" font-family="Noto Sans CJK SC" font-size="12" fill="#6b7280">国际原子时</text>
+    
+    <!-- TAI-UTC 偏移标示 -->
+    <line x1="650" y1="280" x2="687" y2="320" stroke="#059669" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="660" y="310" font-family="Noto Sans CJK SC" font-size="11" fill="#059669" font-weight="bold">TAI-UTC</text>
+    <text x="665" y="322" font-family="Noto Sans CJK SC" font-size="10" fill="#6b7280">~37s</text>
+  </g>
+  
+  <!-- TT 时间轴 -->
+  <g id="tt-axis">
+    <rect x="150" y="360" width="569" height="20" fill="#8b5cf6" fill-opacity="0.3" stroke="#8b5cf6" stroke-width="2" rx="3"/>
+    <text x="80" y="375" font-family="Noto Sans CJK SC" font-size="14" font-weight="bold" fill="#7c3aed">TT</text>
+    <text x="730" y="375" font-family="Noto Sans CJK SC" font-size="12" fill="#6b7280">地球时</text>
+    
+    <!-- TT-TAI 偏移标示 -->
+    <line x1="687" y1="320" x2="719" y2="360" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="695" y="350" font-family="Noto Sans CJK SC" font-size="11" fill="#f59e0b" font-weight="bold">+32.184s</text>
+  </g>
+  
+  <!-- UT1 时间轴 -->
+  <g id="ut1-axis">
+    <rect x="150" y="400" width="495" height="20" fill="#10b981" fill-opacity="0.3" stroke="#10b981" stroke-width="2" rx="3"/>
+    <text x="80" y="415" font-family="Noto Sans CJK SC" font-size="14" font-weight="bold" fill="#059669">UT1</text>
+    <text x="660" y="415" font-family="Noto Sans CJK SC" font-size="12" fill="#6b7280">世界时1</text>
+    
+    <!-- UT1-UTC 偏移标示 -->
+    <line x1="645" y1="280" x2="645" y2="400" stroke="#ec4899" stroke-width="2" stroke-dasharray="2,2"/>
+    <text x="610" y="340" font-family="Noto Sans CJK SC" font-size="11" fill="#ec4899" font-weight="bold">UT1-UTC</text>
+    <text x="605" y="352" font-family="Noto Sans CJK SC" font-size="10" fill="#6b7280">±0.9s</text>
+  </g>
+  
+  <!-- 关系说明框 -->
+  <g id="relationship-box">
+    <rect x="50" y="450" width="800" height="120" rx="8" fill="white" 
+          stroke="#d1d5db" stroke-width="1" filter="url(#dropshadow)"/>
+    
+    <text x="70" y="475" font-family="Noto Sans CJK SC" font-size="16" font-weight="bold" fill="#1f2937">
+      时间系统关系说明：
+    </text>
+    
+    <!-- 说明列表 -->
+    <g id="explanations">
+      <circle cx="80" cy="495" r="3" fill="#ef4444"/>
+      <text x="95" y="500" font-family="Noto Sans CJK SC" font-size="12" fill="#374151">
+        <tspan font-weight="bold">UTC (协调世界时)</tspan>：民用标准时间，基于原子时但包含闰秒调整
+      </text>
+      
+      <circle cx="80" cy="515" r="3" fill="#3b82f6"/>
+      <text x="95" y="520" font-family="Noto Sans CJK SC" font-size="12" fill="#374151">
+        <tspan font-weight="bold">TAI (国际原子时)</tspan>：基于原子钟的连续均匀时标，TAI - UTC ≈ 37秒
+      </text>
+      
+      <circle cx="80" cy="535" r="3" fill="#8b5cf6"/>
+      <text x="95" y="540" font-family="Noto Sans CJK SC" font-size="12" fill="#374151">
+        <tspan font-weight="bold">TT (地球时)</tspan>：理论均匀时标，TT = TAI + 32.184秒
+      </text>
+      
+      <circle cx="80" cy="555" r="3" fill="#10b981"/>
+      <text x="95" y="560" font-family="Noto Sans CJK SC" font-size="12" fill="#374151">
+        <tspan font-weight="bold">UT1 (世界时1)</tspan>：基于地球自转的时间，UT1 - UTC 在 ±0.9秒内变化
+      </text>
+    </g>
+  </g>
+  
+  <!-- 数值示例 -->
+  <g id="numeric-example" transform="translate(480, 470)">
+    <rect x="0" y="0" width="350" height="90" rx="5" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+    <text x="10" y="20" font-family="Noto Sans CJK SC" font-size="14" font-weight="bold" fill="#1f2937">
+      数值示例 (2024年)：
+    </text>
+    <text x="10" y="40" font-family="Noto Sans CJK SC" font-size="11" fill="#374151">
+      TAI - UTC = 37秒
+    </text>
+    <text x="10" y="55" font-family="Noto Sans CJK SC" font-size="11" fill="#374151">
+      TT - UT1 ≈ 69.2秒
+    </text>
+    <text x="10" y="70" font-family="Noto Sans CJK SC" font-size="11" fill="#374151">
+      UT1 - UTC = 37 - 69.2 + 32.184 = -0.016秒
+    </text>
+  </g>
+  
+  <!-- 装饰性元素 -->
+  <g id="decorative-elements" opacity="0.3">
+    <circle cx="70" cy="120" r="8" fill="#3b82f6"/>
+    <circle cx="830" cy="150" r="6" fill="#8b5cf6"/>
+    <rect x="65" y="380" width="12" height="12" rx="2" fill="#10b981" transform="rotate(45 71 386)"/>
+  </g>
+</svg>

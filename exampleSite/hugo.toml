@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://huxulm.dev/'
 languageCode = 'zh-CN'
 title = 'Huxulm 的博客'
 
@@ -26,6 +26,12 @@ title = 'Huxulm 的博客'
     homeOnly = false
     # 动画类型: "particles" | "waves" | "gradient" | "none"
     type = "particles"
+
+  [params.social]
+    github = 'https://github.com/huxulm'
+    email = 'huxulm@gmail.com'
+    bilibili = 'https://space.bilibili.com/1675841003'
+    
 
 [build]
   writeStats = true

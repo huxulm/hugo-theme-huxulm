@@ -1,6 +1,5 @@
 {{ define "main" }}
-<div class="container mx-auto px-4 py-8 max-w-6xl">
-  
+<div class="container mx-auto px-4 py-8 max-w-6xl dark:bg-gray-900/90">
   <!-- 页面头部 -->
   <header class="mb-12 md:mb-16 text-center">
     <div class="max-w-4xl mx-auto">
@@ -20,11 +19,10 @@
   </header>
 
   <!-- 主内容区域：左侧内容 + 右侧筛选器 -->
-  <div class="flex flex-col xl:flex-row gap-8">
+  <div class="flex flex-col xl:flex-row gap-8 dark:border lg:p-10 dark:border-white/10 rounded-sm">
     
     <!-- 左侧：主要内容区域 -->
     <div class="flex-1 xl:max-w-4xl">
-      
       <!-- 移动端筛选按钮 -->
       <div class="xl:hidden mb-6">
         <button 
@@ -60,7 +58,6 @@
         data-tags="{{ if .Params.tags }}{{ delimit .Params.tags "," }}{{ end }}"
         data-reading-time="{{ .ReadingTime }}"
       >
-        
         <!-- 封面图片 -->
         {{- /* 尝试获取 featured_image 或 cover 图片 */ -}}
         {{ $coverImage := "" }}
@@ -72,7 +69,7 @@
             {{ $coverImage = .Resources.GetMatch "featured.{png,jpg,jpeg,webp,svg}" }}
           {{ end }}
         {{ end }}
-
+        {{ $p := . }}
         {{ with $coverImage }}
         {{ $small := $coverImage.Fit "800x450" }}
         <div class="relative overflow-hidden aspect-video bg-gray-200 dark:bg-gray-700">
@@ -91,7 +88,7 @@
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              {{ $.ReadingTime }}分钟
+              {{ $p.ReadingTime }}分钟
             </span>
           </div>
         </div>
@@ -147,7 +144,7 @@
           </div>
           
           <!-- 标题 -->
-          <h2 class="text-xl md:text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
+          <h2 class="text-xl md:text-2xl font-bold mb-3 text-blue-500 dark:text-blue-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-tight">
             <a href="{{ .Permalink }}" class="hover:underline">
               {{ .Title }}
             </a>

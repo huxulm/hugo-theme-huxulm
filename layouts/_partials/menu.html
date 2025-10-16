@@ -51,15 +51,17 @@ Renders a modern menu with theme toggle and icon support.
         <button 
           id="search-trigger"
           type="button"
-          class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors"
+          class="lg:inline-flex items-center p-2 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors"
           aria-label="打开搜索"
         >
-          <i class="fas fa-search mr-2"></i>
+          <span class="lg:mr-2 w-5 h-5">
+            <i class="fas fa-search"></i>
+          </span>
           <span class="hidden sm:inline">搜索</span>
-          <kbd class="hidden sm:inline-flex ml-3 px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
+          <kbd class="hidden lg:inline-flex ml-3 px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded">
             {{ if eq hugo.Environment "production" }}⌘{{ else }}Ctrl+{{ end }}K
           </kbd>
-        </button>        
+        </button>
 
         <!-- Theme Toggle Button (Enhanced with Auto mode) -->
         <button
@@ -70,17 +72,17 @@ Renders a modern menu with theme toggle and icon support.
           title="Toggle theme"
         >
           <!-- Auto Icon (System Mode) -->
-          <svg id="theme-toggle-auto-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-          </svg>
+          <span id="theme-toggle-auto-icon" class="w-5 h-5 hidden">
+            <i  class="fas fa-adjust"></i>
+          </span>
           <!-- Sun Icon (Light Mode) -->
-          <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
-          </svg>
+          <span id="theme-toggle-light-icon" class="w-5 h-5 hidden">
+            <i class="fas fa-sun"></i>
+          </span>
           <!-- Moon Icon (Dark Mode) -->
-          <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-          </svg>
+          <span id="theme-toggle-dark-icon" class="w-5 h-5 hidden">
+            <i class="fas fa-moon"></i>
+          </span>
         </button>
 
         <!-- Mobile menu button -->

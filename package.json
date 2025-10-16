@@ -2,8 +2,10 @@
     "type": "module",
     "scripts": {
         "dev": "hugo server -D --noHTTPCache --disableFastRender -s exampleSite --themesDir ../.. -t hugo-theme-huxulm",
-        "build": "hugo --minify -s exampleSite --themesDir ../.. -t hugo-theme-huxulm",
+        "build": "hugo --minify --baseURL https://huxulm.dev/ -s exampleSite --themesDir ../.. -t hugo-theme-huxulm",
         "index": "node scripts/indexing.js",
+        "deploy": "npx wrangler pages deploy --project-name huxulm exampleSite/public",
+        "deploy:all": "npm run build && npm run index && npx wrangler pages deploy --project-name huxulm exampleSite/public",
         "build:search": "npm run build && npm run index"
     },
     "devDependencies": {
@@ -15,8 +17,5 @@
         "postcss": "^8.4.47",
         "postcss-cli": "^11.0.0",
         "tailwindcss": "^4.1.14"
-    },
-    "dependencies": {
-        "playwright": "^1.56.0"
     }
 }

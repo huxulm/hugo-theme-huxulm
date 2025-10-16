@@ -4,7 +4,6 @@ date: 2024-01-17T17:38:43+08:00
 slug: what-is-sso
 tags: ["单点登录", "认证"]
 toc: true
-featured_image: ""
 description: ""
 params:
   description: ""

@@ -4,7 +4,7 @@ draft = false
 title = 'Hugo Configuration: Site Level vs Theme Level'
 description = '深入理解 Hugo 站点配置与主题配置的区别，掌握正确的配置层级划分'
 tags = ['hugo', 'configuration', 'tutorial']
-categories = ['Hugo']
+categories = ['网站构建', 'Web开发']
 images = [
   './cover.png'
 ]

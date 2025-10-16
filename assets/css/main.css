@@ -177,7 +177,7 @@ kbd {
   font-weight: 500;
   line-height: 1;
   min-width: 1.5rem;
-  display: inline-flex;
+  /* display: inline-flex; */
   align-items: center;
   justify-content: center;
 }

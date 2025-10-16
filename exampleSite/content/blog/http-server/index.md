@@ -3,7 +3,6 @@ title: "HTTP 服务器"
 date: 2024-01-10T13:01:22+08:00
 toc: true
 tags: ["Go", "Web"]
-featured_image: ""
 description: ""
 params:
   description: ""
