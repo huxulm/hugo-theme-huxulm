@@ -320,7 +320,7 @@
 /* Prose 大小变体 */
 .prose-lg {
   font-size: 1.125rem;
-  line-height: 1.7777778;
+  line-height: 1;
 }
 
 .prose-xl {
@@ -576,7 +576,7 @@ article.prose {
 /* 段落间距优化 */
 article.prose p {
   margin-bottom: 1.25rem;
-  line-height: 1.8;
+  line-height: 1.5;
   text-align: justify;
 }
 
@@ -596,8 +596,8 @@ article.prose > p:first-of-type::first-letter {
 article.prose h2 {
   position: relative;
   padding-bottom: 0.75rem;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
   border-bottom: 2px solid rgb(229 231 235);
   scroll-margin-top: 6rem;
 }
@@ -621,8 +621,8 @@ article.prose h2::before {
 article.prose h3 {
   position: relative;
   padding-left: 0.75rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
   scroll-margin-top: 6rem;
 }
 
@@ -645,8 +645,8 @@ article.prose h3::before {
 }
 
 article.prose h4 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
   scroll-margin-top: 6rem;
 }
 

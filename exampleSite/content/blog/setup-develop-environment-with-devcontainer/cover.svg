@@ -1,0 +1,222 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- 定义渐变和样式 -->
+  <defs>
+    <!-- 背景渐变 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0c1222;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 标题渐变 -->
+    <linearGradient id="titleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 容器渐变 -->
+    <linearGradient id="containerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0.8" />
+    </linearGradient>
+    
+    <!-- 发光效果 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- 阴影效果 -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="4" dy="4" stdDeviation="8" flood-color="rgba(59, 130, 246, 0.4)"/>
+    </filter>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- 装饰性网格 -->
+  <g opacity="0.1">
+    <defs>
+      <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+        <path d="M 50 0 L 0 0 0 50" fill="none" stroke="white" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="1200" height="630" fill="url(#grid)"/>
+  </g>
+  
+  <!-- Docker 容器图标 -->
+  <g transform="translate(150, 200)">
+    <!-- 主容器 -->
+    <rect x="0" y="0" width="200" height="120" rx="8" fill="url(#containerGradient)" 
+          stroke="rgba(59, 130, 246, 0.6)" stroke-width="2" filter="url(#shadow)"/>
+    
+    <!-- 容器标志条纹 -->
+    <rect x="10" y="20" width="180" height="8" rx="4" fill="rgba(255,255,255,0.2)"/>
+    <rect x="10" y="35" width="140" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+    <rect x="10" y="50" width="160" height="8" rx="4" fill="rgba(255,255,255,0.1)"/>
+    
+    <!-- Docker 图标 -->
+    <g transform="translate(20, 70)">
+      <rect x="0" y="0" width="12" height="8" fill="#00d2ff"/>
+      <rect x="15" y="0" width="12" height="8" fill="#00d2ff"/>
+      <rect x="30" y="0" width="12" height="8" fill="#00d2ff"/>
+      <rect x="45" y="0" width="12" height="8" fill="#00d2ff"/>
+      <rect x="0" y="12" width="12" height="8" fill="#00d2ff"/>
+      <rect x="15" y="12" width="12" height="8" fill="#0099cc"/>
+      <rect x="30" y="12" width="12" height="8" fill="#0099cc"/>
+      <rect x="45" y="12" width="12" height="8" fill="#00d2ff"/>
+      <rect x="15" y="24" width="12" height="8" fill="#0099cc"/>
+      <rect x="30" y="24" width="12" height="8" fill="#0099cc"/>
+    </g>
+  </g>
+  
+  <!-- VS Code 窗口 -->
+  <g transform="translate(450, 250)">
+    <!-- 窗口背景 -->
+    <rect x="0" y="0" width="300" height="200" rx="6" fill="rgba(30, 41, 59, 0.9)" 
+          stroke="rgba(100, 116, 139, 0.4)" stroke-width="1" filter="url(#shadow)"/>
+    
+    <!-- 标题栏 -->
+    <rect x="0" y="0" width="300" height="30" rx="6" fill="rgba(51, 65, 85, 0.8)"/>
+    
+    <!-- 窗口控制按钮 -->
+    <circle cx="15" cy="15" r="5" fill="#ef4444"/>
+    <circle cx="35" cy="15" r="5" fill="#f59e0b"/>
+    <circle cx="55" cy="15" r="5" fill="#10b981"/>
+    
+    <!-- VS Code 标志 -->
+    <text x="150" y="20" text-anchor="middle" font-family="Noto Sans CJK SC" 
+          font-size="12" fill="rgba(255,255,255,0.8)" font-weight="600">
+      VS Code
+    </text>
+    
+    <!-- 代码编辑器内容 -->
+    <g transform="translate(15, 45)">
+      <!-- 行号 -->
+      <text x="0" y="15" font-family="Noto Sans CJK SC" font-size="10" fill="rgba(156, 163, 175, 0.6)">1</text>
+      <text x="0" y="30" font-family="Noto Sans CJK SC" font-size="10" fill="rgba(156, 163, 175, 0.6)">2</text>
+      <text x="0" y="45" font-family="Noto Sans CJK SC" font-size="10" fill="rgba(156, 163, 175, 0.6)">3</text>
+      <text x="0" y="60" font-family="Noto Sans CJK SC" font-size="10" fill="rgba(156, 163, 175, 0.6)">4</text>
+      
+      <!-- 代码内容 -->
+      <text x="20" y="15" font-family="Noto Sans CJK SC" font-size="10" fill="#f59e0b">FROM</text>
+      <text x="50" y="15" font-family="Noto Sans CJK SC" font-size="10" fill="#10b981">node:18</text>
+      
+      <text x="20" y="30" font-family="Noto Sans CJK SC" font-size="10" fill="#f59e0b">WORKDIR</text>
+      <text x="65" y="30" font-family="Noto Sans CJK SC" font-size="10" fill="#10b981">/app</text>
+      
+      <text x="20" y="45" font-family="Noto Sans CJK SC" font-size="10" fill="#f59e0b">COPY</text>
+      <text x="50" y="45" font-family="Noto Sans CJK SC" font-size="10" fill="#10b981">. .</text>
+      
+      <text x="20" y="60" font-family="Noto Sans CJK SC" font-size="10" fill="#f59e0b">RUN</text>
+      <text x="45" y="60" font-family="Noto Sans CJK SC" font-size="10" fill="#10b981">npm install</text>
+    </g>
+    
+    <!-- 终端区域 -->
+    <rect x="10" y="120" width="280" height="70" fill="rgba(15, 23, 42, 0.8)" rx="3"/>
+    <text x="20" y="140" font-family="Noto Sans CJK SC" font-size="10" fill="#22c55e">$ </text>
+    <text x="35" y="140" font-family="Noto Sans CJK SC" font-size="10" fill="rgba(255,255,255,0.8)">docker run --rm -it devcontainer</text>
+    <text x="20" y="155" font-family="Noto Sans CJK SC" font-size="10" fill="rgba(156, 163, 175, 0.6)">✓ Container started successfully</text>
+    <text x="20" y="170" font-family="Noto Sans CJK SC" font-size="10" fill="rgba(156, 163, 175, 0.6)">✓ Development environment ready</text>
+  </g>
+  
+  <!-- 连接线和箭头 -->
+  <g stroke="url(#titleGradient)" stroke-width="3" fill="none" opacity="0.8">
+    <path d="M 350 260 Q 400 260 450 280" marker-end="url(#arrowhead)"/>
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+              refX="9" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="url(#titleGradient)" />
+      </marker>
+    </defs>
+  </g>
+  
+  <!-- 主标题 -->
+  <text x="600" y="120" text-anchor="middle" font-family="Noto Sans CJK SC" 
+        font-size="48" font-weight="bold" fill="url(#titleGradient)" filter="url(#glow)">
+    开发容器环境
+  </text>
+  
+  <!-- 副标题 -->
+  <text x="600" y="160" text-anchor="middle" font-family="Noto Sans CJK SC" 
+        font-size="24" font-weight="400" fill="rgba(255,255,255,0.8)">
+    Dev Container Development Environment
+  </text>
+  
+  <!-- 特性标签 -->
+  <g transform="translate(600, 500)">
+    <!-- 统一环境 -->
+    <g transform="translate(-200, 0)">
+      <rect x="-40" y="-15" width="80" height="30" rx="15" 
+            fill="rgba(59, 130, 246, 0.2)" stroke="rgba(59, 130, 246, 0.6)" stroke-width="1"/>
+      <text x="0" y="5" text-anchor="middle" font-family="Noto Sans CJK SC" 
+            font-size="12" fill="rgba(59, 130, 246, 1)" font-weight="600">
+        统一环境
+      </text>
+    </g>
+    
+    <!-- 快速启动 -->
+    <g transform="translate(-60, 0)">
+      <rect x="-40" y="-15" width="80" height="30" rx="15" 
+            fill="rgba(139, 92, 246, 0.2)" stroke="rgba(139, 92, 246, 0.6)" stroke-width="1"/>
+      <text x="0" y="5" text-anchor="middle" font-family="Noto Sans CJK SC" 
+            font-size="12" fill="rgba(139, 92, 246, 1)" font-weight="600">
+        快速启动
+      </text>
+    </g>
+    
+    <!-- 团队协作 -->
+    <g transform="translate(80, 0)">
+      <rect x="-40" y="-15" width="80" height="30" rx="15" 
+            fill="rgba(16, 185, 129, 0.2)" stroke="rgba(16, 185, 129, 0.6)" stroke-width="1"/>
+      <text x="0" y="5" text-anchor="middle" font-family="Noto Sans CJK SC" 
+            font-size="12" fill="rgba(16, 185, 129, 1)" font-weight="600">
+        团队协作
+      </text>
+    </g>
+    
+    <!-- 环境隔离 -->
+    <g transform="translate(200, 0)">
+      <rect x="-40" y="-15" width="80" height="30" rx="15" 
+            fill="rgba(245, 158, 11, 0.2)" stroke="rgba(245, 158, 11, 0.6)" stroke-width="1"/>
+      <text x="0" y="5" text-anchor="middle" font-family="Noto Sans CJK SC" 
+            font-size="12" fill="rgba(245, 158, 11, 1)" font-weight="600">
+        环境隔离
+      </text>
+    </g>
+  </g>
+  
+  <!-- 装饰性元素 -->
+  <g opacity="0.3">
+    <!-- 浮动的代码片段 -->
+    <g transform="translate(850, 150)">
+      <rect x="0" y="0" width="60" height="40" rx="4" fill="rgba(59, 130, 246, 0.1)" 
+            stroke="rgba(59, 130, 246, 0.3)" stroke-width="1"/>
+      <text x="30" y="25" text-anchor="middle" font-family="Noto Sans CJK SC" 
+            font-size="8" fill="rgba(59, 130, 246, 0.8)">.devcontainer</text>
+    </g>
+    
+    <g transform="translate(80, 400)">
+      <rect x="0" y="0" width="50" height="35" rx="4" fill="rgba(139, 92, 246, 0.1)" 
+            stroke="rgba(139, 92, 246, 0.3)" stroke-width="1"/>
+      <text x="25" y="22" text-anchor="middle" font-family="Noto Sans CJK SC" 
+            font-size="8" fill="rgba(139, 92, 246, 0.8)">Docker</text>
+    </g>
+    
+    <g transform="translate(1000, 400)">
+      <rect x="0" y="0" width="55" height="35" rx="4" fill="rgba(16, 185, 129, 0.1)" 
+            stroke="rgba(16, 185, 129, 0.3)" stroke-width="1"/>
+      <text x="27" y="22" text-anchor="middle" font-family="Noto Sans CJK SC" 
+            font-size="8" fill="rgba(16, 185, 129, 0.8)">VS Code</text>
+    </g>
+  </g>
+  
+  <!-- 底部装饰线 -->
+  <rect x="400" y="580" width="400" height="4" rx="2" fill="url(#titleGradient)" opacity="0.6"/>
+</svg>
