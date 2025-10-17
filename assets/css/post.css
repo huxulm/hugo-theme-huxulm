@@ -73,8 +73,8 @@
 }
 
 .prose :where(li):not(:where([class~="not-prose"] *)) {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: 0.125em;
+  margin-bottom: 0.125em;
 }
 
 .prose :where(ol > li):not(:where([class~="not-prose"] *)) {
@@ -636,8 +636,8 @@ article.prose h3::before {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(147 51 234);
-  font-size: 0.75rem;
+  font-size: 0.35rem!important;
+  @apply from-blue-700 to-indigo-300 bg-gradient-to-br bg-clip-text text-transparent;
 }
 
 .dark article.prose h3::before {

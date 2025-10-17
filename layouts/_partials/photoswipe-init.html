@@ -10,8 +10,8 @@
   // 如果你不能用模块加载器，也可以使用 UMD 版本（上面的 photoswipe.min.js），然后用全局 PhotoSwipeLightbox（视 CDN 文件而定）
 
   const lightbox = new PhotoSwipeLightbox({
-    gallery: 'article', // 这里我们把每张 <a> 做为独立项：'.pswp-item' 也可以改为包含父容器
-    children: 'a',
+    gallery: '#blog-article', // 这里我们把每张 <a> 做为独立项：'.pswp-item' 也可以改为包含父容器
+    children: '.photoswipe-item',
     pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe/dist/photoswipe.esm.min.js')
   });
 
