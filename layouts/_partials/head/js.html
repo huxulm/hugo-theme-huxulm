@@ -70,3 +70,20 @@
     {{- end }}
   {{- end }}
 {{- end -}}
+
+{{- /* Install AI chatbot widget.js */ -}}
+{{- with resources.Get "js/widget.js" }}
+  {{- $opts := dict
+    "minify" (not hugo.IsDevelopment)
+    "targetPath" "js/widget.js"
+  }}
+  {{- with . | js.Build $opts }}
+    {{- if hugo.IsDevelopment }}
+      <script src="{{ .RelPermalink }}" data-endpoint="https://website-rag-worker.huxulm.dev" defer=""></script>
+    {{- else }}
+      {{- with . | fingerprint }}
+        <script src="{{ .RelPermalink }}" data-endpoint="https://website-rag-worker.huxulm.dev" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer=""></script>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}

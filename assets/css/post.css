@@ -808,6 +808,7 @@ article.prose ol {
 article.prose li {
   margin: 0.75rem 0;
   padding-left: 0.5rem;
+  line-height: 1.2;
 }
 
 article.prose ul li::marker {
