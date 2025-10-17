@@ -873,7 +873,7 @@
             collapsed.innerHTML = '<div class="ai-chatbot-icon">💬</div>' +
                                 '<div class="ai-chatbot-text">' +
                                     '<div>ASK</div>' +
-                                    '<div>JIMMY</div>' +
+                                    '<div>HUXULM</div>' +
                                 '</div>';
         }
         
