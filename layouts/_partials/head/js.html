@@ -51,3 +51,22 @@
   {{- end }}
 {{- end }}
 
+{{- /* Shiki Highlighter JavaScript */ -}}
+{{ if eq .Type "blog" }}
+  {{- with resources.Get "js/shiki-hl.js" }}
+    {{- $opts := dict
+      "minify" (not hugo.IsDevelopment)
+      "sourceMap" (cond hugo.IsDevelopment "external" "")
+      "targetPath" "js/shiki-hl.js"
+    }}
+    {{- with . | js.Build $opts }}
+      {{- if hugo.IsDevelopment }}
+        <script src="{{ .RelPermalink }}"></script>
+      {{- else }}
+        {{- with . | fingerprint }}
+          <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end -}}

@@ -182,6 +182,65 @@ kbd {
   justify-content: center;
 }
 
+
+/* ================================================
+   代码块样式优化
+   ================================================ */
+
+/* 代码块容器 */
+pre {
+  position: relative !important;
+  margin: 1.5rem 0;
+}
+
+/* 复制按钮样式 */
+.copy-btn {
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+  pointer-events: auto;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+/* 悬停时显示复制按钮 */
+pre:hover .copy-btn {
+  opacity: 1;
+}
+
+/* 复制按钮悬停效果 */
+.copy-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.dark .copy-btn:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 确保代码块内容不会被按钮遮挡 */
+pre code {
+  display: block;
+  padding-right: 4rem; /* 为复制按钮留空间 */
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .copy-btn {
+    opacity: 1; /* 移动端始终显示 */
+    position: static;
+    top: auto;
+    right: auto;
+    margin-top: 0.5rem;
+    float: right;
+  }
+  
+  pre code {
+    padding-right: 1rem;
+  }
+}
+
 /* ================================================
    打印样式
    ================================================ */

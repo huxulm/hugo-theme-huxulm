@@ -50,10 +50,31 @@ title = 'Huxulm 的博客'
   [[build.cachebusters]]
     source = 'assets/.*\.(js|ts|jsx|tsx)'
     target = 'js'
+  [[build.cachebusters]]
+    source = '../assets/.*\.(js|ts|jsx|tsx)'
+    target = 'js'
   
   [[build.cachebusters]]
     source = '(go|html)$'
     target = 'css'
+
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 2
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = false
+    guessSyntax = false
+    hl_Lines = ""
+    lineAnchors = ""
+    lineNoStart = ""
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = false
+    style = ""
+    tabWidth = ""
 
 [module]
 

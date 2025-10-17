@@ -9,7 +9,7 @@ export default {
     './layouts/**/*.html',
     './content/**/*.{md,html}',
     './exampleSite/**/*.{html,md,js}',
-    './assets/**/*.{css,js}',
+    './assets/**/*.{css,js,ts,jsx,tsx}',
   ],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
@@ -62,6 +62,16 @@ export default {
       },
     },
   },
+  safelist: [
+    // 代码高亮和复制按钮相关的类
+    {
+      pattern: /(copy-btn|fa-|fas|text-green-500|duration-200|transition-colors)/,
+    },
+    // 响应式和状态变体
+    {
+      pattern: /(dark|hover|focus|active):(.*)/,
+    }
+  ],  
   plugins: [
     require('@tailwindcss/typography'),
   ],

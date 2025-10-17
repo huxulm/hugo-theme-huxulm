@@ -28,7 +28,7 @@ title = 'My New Hugo Site'
 
 [build]
   [build.buildStats]
-    enable = false
+    enable = true
 
 [module]
   [module.hugoVersion]
@@ -67,12 +67,6 @@ title = 'My New Hugo Site'
   [[module.mounts]]
     source = "content"
     target = "content"
-
-[markup]
-  [markup.tableOfContents]
-    endLevel = 3
-    ordered = false
-    startLevel = 2
 
 [params]
   # 首页配置
